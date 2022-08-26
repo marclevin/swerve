@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.forms import AuthenticationForm
 from .forms import newCustomer
 from .models import Customer
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
 # Create your views here.
 
@@ -14,6 +14,11 @@ def index(request):
 
 def store(request):
     return render(request, 'pages/store.html')
+
+def logout_request(request):
+    logout(request)
+    messages.info(request, 'Logged out successfully!')
+    return redirect('index')
 
 
 def register_request(request):
