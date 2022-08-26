@@ -24,7 +24,7 @@ class Product(models.Model):
     discount_price = models.FloatField(max_length=100)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     stock = models.IntegerField()
-    image = models.ImageField(upload_to='')
+    image = models.ImageField(upload_to='static/Images')
 
     def __str__(self):
         return self.name
