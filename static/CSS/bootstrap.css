@@ -3074,6 +3074,7 @@ input[type="button"].btn-block {
   border-radius: 0.25rem;
 }
 
+
 .dropdown-menu-left {
   right: auto;
   left: 0;
@@ -3232,7 +3233,7 @@ input[type="button"].btn-block {
   padding: 0.25rem 1.5rem;
   clear: both;
   font-weight: 400;
-  color: #212529;
+  color: #61963f;
   text-align: inherit;
   white-space: nowrap;
   background-color: transparent;
