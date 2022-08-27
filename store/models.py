@@ -64,6 +64,9 @@ class Invoice(models.Model):
     date = models.DateField(default=datetime.datetime.today)
     status = models.BooleanField(default=False)
 
+    def placeOrder(self):
+        self.save()
+
     @staticmethod
     def get_orders_by_customer(customer_id):
         return Invoice.objects.filter(customer=customer_id).order_by('-date')
