@@ -13,6 +13,8 @@ class Customer(models.Model):
 
 class Category(models.Model):
     name = models.CharField(max_length=100)
+    description = models.CharField(max_length=350)
+    image = models.ImageField(upload_to='static/Images')
 
     def __str__(self):
         return self.name
