@@ -1,16 +1,18 @@
 {% extends 'master/main.html' %}
+{% load crispy_forms_filters %}
 {% load static %}
 {% block content %}
-{% load crispy_forms_tags %}
-<!--Login--> 
-<div class="container py-5">
-    <h1>Login</h1>
-    <form method="POST">
-      {% csrf_token %}
-      {{ login_form|crispy }}
-      <br>
-      <button class="btn btn-primary" type="submit">Login</button>
-    </form>
-    <p class="text-center">Don't have an account? <a href="{% url 'register'%}"><b>Create an account</b></b></a>.</p>
-  </div>
-  {% endblock content %}
+    {% load crispy_forms_tags %}
+    <!--Login-->
+    <div class="container py-5">
+        <h1>Login</h1>
+        <form method="POST">
+            {% csrf_token %}
+            {{ login_form|crispy }}
+            <br>
+            <button class="btn btn-primary" type="submit">Login</button>
+        </form>
+        <p class="text-center">Don't have an account? <a href="{% url 'register' %}"><b>Create an account</b></b></a>.
+        </p>
+    </div>
+{% endblock content %}
