@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from .models import Customer
 from django.contrib.auth.forms import UserCreationForm
 
+
 class newCustomer(UserCreationForm):
     email = forms.EmailField(required=True)
     address = forms.CharField(required=False)
@@ -17,4 +18,3 @@ class newCustomer(UserCreationForm):
         if commit:
             user.save()
         return user
-

@@ -4,6 +4,8 @@ from .forms import newCustomer
 from .models import Customer
 from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
+
+
 # Create your views here.
 
 
@@ -15,6 +17,7 @@ def index(request):
 def store(request):
     return render(request, 'pages/store.html')
 
+
 def logout_request(request):
     logout(request)
     messages.info(request, 'Logged out successfully!')
@@ -22,7 +25,7 @@ def logout_request(request):
 
 
 def register_request(request):
-    if (request.method == 'POST'):
+    if request.method == 'POST':
         form = newCustomer(request.POST)
         if form.is_valid():
             user = form.save()
@@ -55,4 +58,4 @@ def login_request(request):
         else:
             messages.error(request, 'Invalid username or password.')
     form = AuthenticationForm()
-    return render(request=request, template_name="pages/login.html", context={"login_form":form})
+    return render(request=request, template_name="pages/login.html", context={"login_form": form})
