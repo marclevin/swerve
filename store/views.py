@@ -1,9 +1,12 @@
+from django.core.mail import send_mail
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import AuthenticationForm
 from .forms import newCustomer
 from .models import Customer
 from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
+
+
 # Create your views here.
 
 
@@ -15,6 +18,7 @@ def index(request):
 def store(request):
     return render(request, 'pages/store.html')
 
+
 def logout_request(request):
     logout(request)
     messages.info(request, 'Logged out successfully!')
@@ -22,7 +26,7 @@ def logout_request(request):
 
 
 def register_request(request):
-    if (request.method == 'POST'):
+    if request.method == 'POST':
         form = newCustomer(request.POST)
         if form.is_valid():
             user = form.save()
@@ -55,4 +59,20 @@ def login_request(request):
         else:
             messages.error(request, 'Invalid username or password.')
     form = AuthenticationForm()
-    return render(request=request, template_name="pages/login.html", context={"login_form":form})
+    return render(request=request, template_name="pages/login.html", context={"login_form": form})
+
+
+def contact(request):
+    if request.method == "POST":
+        message_name = request.POST["message-name"]
+        message_email = request.POST["message-email"]
+        message_phone = request.POST["message-phone"]
+        message = request.POST["message"]
+        # send email
+        send_mail(
+            subject="Website Contact Form",
+            message='From:' + message_name + ': ' + message + '// Phone Number: ' + message_phone,
+            from_email=message_email,
+            recipient_list=["@gmail.com"],
+        )
+    return render(request, "pages/index.html")
