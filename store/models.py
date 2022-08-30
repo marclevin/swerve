@@ -54,7 +54,7 @@ class Product(models.Model):
     def __str__(self):
         return self.name
 
-    
+
 class Order(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     date = models.DateField(default=datetime.datetime.today)
@@ -73,6 +73,7 @@ class OrderItem(models.Model):
 
     def get_total_price(self):
         return self.quantity * self.price
+
 
 class Invoice(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)

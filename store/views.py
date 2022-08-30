@@ -86,4 +86,4 @@ def product_by_category(request, category):
     category_selected = Category.objects.get(name=category)
     products = Product.objects.filter(category=category_selected)
     context = {'products': products, 'category': category}
-    return render(request, 'pages/product_page.html', context)
+    return render(request, 'pages/store.html', context)
