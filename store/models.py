@@ -33,6 +33,9 @@ class Product(models.Model):
     price = models.FloatField()
     discount_price = models.FloatField(max_length=100)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    brand = models.CharField(max_length=100, default="")
+    colour = models.CharField(max_length=100, default="")
+    weight = models.FloatField(default=0)
     stock = models.IntegerField()
     image = models.ImageField(upload_to='product_images/', default='afk.jpg')
 
