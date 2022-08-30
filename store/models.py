@@ -54,6 +54,26 @@ class Product(models.Model):
     def __str__(self):
         return self.name
 
+    
+class Order(models.Model):
+     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
+     date = models.DateField(default=datetime.datetime.today)
+     status = models.BooleanField(default=False)
+     total_price = models.FloatField(default=0)
+
+
+class OrderItem(models.Model):
+    order = models.ForeignKey(Order, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    quantity = models.IntegerField(default=1)
+    price = models.FloatField(default=0)
+
+    def __str__(self):
+        return f'{self.quantity} of {self.product.name}'
+
+    def get_total_price(self):
+        return self.quantity * self.price
+
 class Invoice(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
