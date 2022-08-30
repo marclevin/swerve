@@ -2,7 +2,7 @@ from django.core.mail import send_mail
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import AuthenticationForm
 from .forms import newCustomer
-from .models import Customer
+from .models import *
 from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
 
@@ -16,7 +16,10 @@ def index(request):
 
 
 def store(request):
-    return render(request, 'pages/store.html')
+    # Retrieve all categories from database
+    categories = Category.objects.all()
+    context = {'categories': categories}
+    return render(request, 'pages/store.html', context)
 
 
 def logout_request(request):
@@ -38,7 +41,8 @@ def register_request(request):
             )
             messages.success(request, 'Account created successfully')
             return redirect('index')
-        messages.error(request, 'Error creating account')
+        else:
+            messages.error(request, 'Error creating account')
     form = newCustomer()
     return render(request, 'pages/register.html', {'register_form': form})
 

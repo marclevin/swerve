@@ -1,0 +1,176 @@
+{% extends 'master/main.html' %}
+{% load crispy_forms_filters %}
+{% load static %}
+{% block content %}
+
+<section class="shop_section layout_padding">
+    <div class="container">
+      <div class="heading_container heading_center">
+        <h2>
+          Categories
+        </h2>
+      </div>
+      <div class="row">
+        <!-- LOOP-->
+        {% for category in categories %}
+        <div class="col-sm-6 col-xl-3">
+          <div class="box">
+            <a href="">
+              <div class="img-box">
+                <img src="images/w2.png" alt="">
+              </div>
+              <div class="detail-box">
+                <h6>
+                  {{ category.name }}
+                </h6>
+                <h6>
+                  Price:
+                  <span>
+                    R{{ category.price }}
+                  </span>
+                </h6>
+              </div>
+              <div class="new">
+                <span>
+                  New
+                </span>
+              </div>
+            </a>
+          </div>
+        </div>
+        {% endfor %}
+        <!-- LOOP -->
+        <div class="col-sm-6 col-xl-3">
+          <div class="box">
+            <a href="">
+              <div class="img-box">
+                <img src="images/w3.png" alt="">
+              </div>
+              <div class="detail-box">
+                <h6>
+                  Smartwatch
+                </h6>
+                <h6>
+                  Price:
+                  <span>
+                    $110
+                  </span>
+                </h6>
+              </div>
+              <div class="new">
+                <span>
+                  New
+                </span>
+              </div>
+            </a>
+          </div>
+        </div>
+        <div class="col-sm-6 col-xl-3">
+          <div class="box">
+            <a href="">
+              <div class="img-box">
+                <img src="images/w4.png" alt="">
+              </div>
+              <div class="detail-box">
+                <h6>
+                  Smartwatch
+                </h6>
+                <h6>
+                  Price:
+                  <span>
+                    $145
+                  </span>
+                </h6>
+              </div>
+              <div class="new">
+                <span>
+                  New
+                </span>
+              </div>
+            </a>
+          </div>
+        </div>
+        <div class="col-sm-6 col-xl-3">
+          <div class="box">
+            <a href="">
+              <div class="img-box">
+                <img src="images/w5.png" alt="">
+              </div>
+              <div class="detail-box">
+                <h6>
+                  Smartwatch
+                </h6>
+                <h6>
+                  Price:
+                  <span>
+                    $195
+                  </span>
+                </h6>
+              </div>
+              <div class="new">
+                <span>
+                  New
+                </span>
+              </div>
+            </a>
+          </div>
+        </div>
+        <div class="col-sm-6  col-xl-3">
+          <div class="box">
+            <a href="">
+              <div class="img-box">
+                <img src="images/w6.png" alt="">
+              </div>
+              <div class="detail-box">
+                <h6>
+                  Smartwatch
+                </h6>
+                <h6>
+                  Price:
+                  <span>
+                    $170
+                  </span>
+                </h6>
+              </div>
+              <div class="new">
+                <span>
+                  New
+                </span>
+              </div>
+            </a>
+          </div>
+        </div>
+        <div class="col-sm-6 col-xl-3">
+          <div class="box">
+            <a href="">
+              <div class="img-box">
+                <img src="images/w1.png" alt="">
+              </div>
+              <div class="detail-box">
+                <h6>
+                  Smartwatch
+                </h6>
+                <h6>
+                  Price:
+                  <span>
+                    $230
+                  </span>
+                </h6>
+              </div>
+              <div class="new">
+                <span>
+                  New
+                </span>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="btn-box">
+        <a href="">
+          View All
+        </a>
+      </div>
+    </div>
+  </section>
+  {% endblock content %}
