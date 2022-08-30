@@ -15,7 +15,7 @@
         {% for category in categories %}
         <div class="col-sm-6 col-xl-3">
           <div class="box">
-            <a href="url 'product_by_category/{{category.name}}'">
+            <a href="{% url 'product_by_category' category.name %}">
               <div class="img-box">
                 <img src="Images/category_images/{{ category.image }}" alt="">
               </div>
