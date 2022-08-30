@@ -17,7 +17,7 @@ class Customer(models.Model):
 class Category(models.Model):
     name = models.CharField(max_length=100)
     description = models.CharField(max_length=350, blank=True)
-    image = models.ImageField(upload_to='static/Images', default='afk.jpg')
+    image = models.ImageField(upload_to='category_images/', default='afk.jpg')
 
     @staticmethod
     def get_categories():
@@ -34,7 +34,7 @@ class Product(models.Model):
     discount_price = models.FloatField(max_length=100)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     stock = models.IntegerField()
-    image = models.ImageField(upload_to='static/Images')
+    image = models.ImageField(upload_to='product_images/', default='afk.jpg')
 
     @staticmethod
     def get_products_by_id(ids):
