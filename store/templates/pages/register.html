@@ -2,16 +2,16 @@
 {% load crispy_forms_filters %}
 {% load static %}
 {% block content %}
-    {% load crispy_forms_tags %}
-    <!--Register-->
-    <div class="container py-5">
-        <h1>Register</h1>
-        <div class='error'>{{form.errors.username}}</div>
-        <form method="POST">
-            {% csrf_token %}
-            {{ register_form|crispy }}
-            <button class="btn btn-primary" type="submit">Register</button>
-        </form>
-        <p class="text-center">If you already have an account,<b><a href="{% url 'login' %}"> login instead</a></b>.</p>
-    </div>
+{% load crispy_forms_tags %}
+<!--Register-->
+<div class="container py-5">
+    <h1>Register</h1>
+    <div class='error'>{{form.errors.username}}</div>
+    <form method="POST">
+        {% csrf_token %}
+        {{ register_form|crispy }}
+        <button class="btn btn-primary" type="submit">Register</button>
+    </form>
+    <p class="text-center">If you already have an account,<b><a href="{% url 'login' %}"> login instead</a></b>.</p>
+</div>
 {% endblock content %}
