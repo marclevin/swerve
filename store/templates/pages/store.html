@@ -17,17 +17,11 @@
           <div class="box">
             <a href="{% url 'product_by_category' category.name %}">
               <div class="img-box">
-                <img src="Images/category_images/{{ category.image }}" alt="">
+                <img src="{{category.image.url}}" alt="">
               </div>
               <div class="detail-box">
                 <h6>
                   {{ category.name }}
-                </h6>
-                <h6>
-                  Price:
-                  <span>
-                    R{{ category.price }}
-                  </span>
                 </h6>
               </div>
               <div class="new">
