@@ -7,26 +7,26 @@
     <div class="container">
       <div class="heading_container heading_center">
         <h2>
-          Categories
+          {{ category.name }}
         </h2>
       </div>
       <div class="row">
         <!-- LOOP-->
-        {% for category in categories %}
+        {% for product in products %}
         <div class="col-sm-6 col-xl-3">
           <div class="box">
-            <a href="{{}}">
+            <a href="">
               <div class="img-box">
-                <img src="Images/category_images/{{ category.image }}" alt="">
+                <img src="Images/product_images/{{ product.image }}" alt="">
               </div>
               <div class="detail-box">
                 <h6>
-                  {{ category.name }}
+                  {{ product.name }}
                 </h6>
                 <h6>
                   Price:
                   <span>
-                    R{{ category.price }}
+                    R{{ product.price }}
                   </span>
                 </h6>
               </div>

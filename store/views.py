@@ -80,3 +80,9 @@ def contact(request):
             recipient_list=["@gmail.com"],
         )
     return render(request, "pages/index.html")
+
+
+def product_by_category(request, category):
+    products = Product.objects.filter(category=category)
+    context = {'products': products, 'category': category}
+    return render(request, 'pages/store.html', context)

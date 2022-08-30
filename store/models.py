@@ -54,12 +54,14 @@ class Product(models.Model):
     def __str__(self):
         return self.name
 
-    
+# This is the model for the carts
+
+
 class Order(models.Model):
-     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
-     date = models.DateField(default=datetime.datetime.today)
-     status = models.BooleanField(default=False)
-     total_price = models.FloatField(default=0)
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
+    date = models.DateField(default=datetime.datetime.today)
+    status = models.BooleanField(default=False)
+    total_price = models.FloatField(default=0)
 
 
 class OrderItem(models.Model):
@@ -74,18 +76,3 @@ class OrderItem(models.Model):
     def get_total_price(self):
         return self.quantity * self.price
 
-class Invoice(models.Model):
-    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    quantity = models.IntegerField(default=1)
-    destination = models.CharField(max_length=50, default='', blank=True)
-    price = models.IntegerField(default=0)
-    date = models.DateField(default=datetime.datetime.today)
-    status = models.BooleanField(default=False)
-
-    def saveInvoice(self):
-        self.save()
-
-    @staticmethod
-    def get_invoice_by_customer(customer_id):
-        return Invoice.objects.filter(customer=customer_id).order_by('-date')
