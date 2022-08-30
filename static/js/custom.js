@@ -1,11 +1,4 @@
-// to get current year
-function getYear() {
-    var currentDate = new Date();
-    var currentYear = currentDate.getFullYear();
-    document.querySelector("#displayYear").innerHTML = currentYear;
-}
 
-getYear();
 
 // client section owl carousel
 $(".client_owl-carousel").owlCarousel({
