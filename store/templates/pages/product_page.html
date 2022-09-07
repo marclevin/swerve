@@ -17,31 +17,26 @@
                 <div class="box">
                     <a href="">
                         <div class="img-box">
-                            <img src="Images/product_images/{{ product.image }}" alt="">
+                            <img src="/static/Images/{{ product.getImage }}" alt="">
                         </div>
                         <div class="detail-box">
                             <h6>
                                 {{ product.name }}
                             </h6>
-                            <h6>
-                                Price:
-                            </h6>
-                            <span>
-                    R{{ product.price }}
-                  </span>
-
                         </div>
+                        <h6 style="color:#61963f">R{{ product.price }}</h6>    
                         <div class="new">
-                <span>
-                  New
-                </span>
+                            <span>
+                            New
+                            </span>
                         </div>
                     </a>
                 </div>
             </div>
+            {% endfor %}
+            <!-- LOOP -->
         </div>
     </div>
-        {% end-for %}
-        <!-- LOOP -->
+        
 </section>
 {% endblock content %}

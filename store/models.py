@@ -57,6 +57,10 @@ class Product(models.Model):
     def __str__(self):
         return self.name
 
+    def getImage(self):
+        if self.image and hasattr(self.image, 'url'):
+            return self.image
+
 
 class Order(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
