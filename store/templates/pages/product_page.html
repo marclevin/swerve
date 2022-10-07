@@ -1,5 +1,5 @@
 {% extends 'master/main.html' %}
-{% load crispy_forms_filters %}
+{% load crispy_forms_tags %}
 {% load humanize %}
 {% load static %}
 {% block content %}
@@ -11,8 +11,7 @@
             </h2>
         </div>
         <div class="row">
-            <!-- LOOP-->
-            {% for product in products %}
+            {% for product in product_filter.qs %}
             <div class="col-sm-6 col-xl-3">
                 <div class="box">
                     <a href="">
@@ -38,10 +37,8 @@
                 </div>
             </div>
             {% endfor %}
-    
             <!-- LOOP -->
         </div>
     </div>
-        
 </section>
 {% endblock content %}

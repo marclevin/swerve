@@ -8,7 +8,6 @@ from .models import *
 from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
 
-
 # Create your views here.
 
 
@@ -104,3 +103,5 @@ def product_by_category(request, category):
 
 def calculator(request):
     return render(request, 'pages/calculator.html')
+
+ 
