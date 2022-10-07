@@ -74,8 +74,18 @@ def add_to_cart(request, product_id):
     order_item, created = OrderItem.objects.get_or_create(customer=request.user, order=cart, product=product)
     order_item.quantity += 1
     order_item.save()
-    messages.success(request, "Successfully added " + product.name + " to your cart")
+    messages.success(request, f"Successfully added {product.name} to your cart")
     return redirect("pages/index.html")
+
+
+@login_required
+def remove_from_cart(request, product_id, cart_id):
+    product = get_object_or_404(Product, pk=product_id)
+    cart = get_object_or_404(Order, pk=cart_id)
+    order_item = OrderItem.objects.get(Order=cart, product=product)
+    order_item.quantity -= 1
+    order_item.save()
+    messages.success(request, f"Successfully removed one {product.name} from your cart")
 
 
 def contact(request):
@@ -87,7 +97,7 @@ def contact(request):
         # send email
         send_mail(
             subject="Website Contact Form",
-            message='From:' + message_name + ': ' + message + '// Phone Number: ' + message_phone,
+            message=f"From: {message_name}   {message} Phone Number: {message_phone}",
             from_email=message_email,
             recipient_list=["@gmail.com"],
         )
