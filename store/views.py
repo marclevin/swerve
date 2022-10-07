@@ -8,6 +8,7 @@ from .models import *
 from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
 
+
 # Create your views here.
 
 
@@ -79,13 +80,31 @@ def add_to_cart(request, product_id):
 
 
 @login_required
-def remove_from_cart(request, product_id, cart_id):
+def remove_from_cart(request, product_id):
     product = get_object_or_404(Product, pk=product_id)
-    cart = get_object_or_404(Cart, pk=cart_id)
+    cart = Cart.objects.get(customer=request.user)
     cart_item = CartItem.objects.get(Order=cart, product=product)
     cart_item.quantity -= 1
-    cart_item.save()
     messages.success(request, f"Successfully removed one {product.name} from your cart")
+    if cart_item.quantity == 0:
+        cart_item.delete()
+    else:
+        cart_item.save()
+
+    cart_not_empty = delete_cart_if_empty
+    if cart_not_empty:
+        return redirect("pages/index.html")
+    else:
+        return redirect("pages/index.html")
+
+
+def delete_cart_if_empty(request):
+    cart = Cart.objects.get(customer=request.user)
+    any_cart_items = CartItem.objects.filter(cart=cart)
+    if any_cart_items.exists():
+        return True
+    else:
+        cart.delete()
 
 
 def contact(request):
@@ -113,5 +132,3 @@ def product_by_category(request, category):
 
 def calculator(request):
     return render(request, 'pages/calculator.html')
-
- 

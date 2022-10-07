@@ -94,7 +94,7 @@ class Order(models.Model):
 
     def set_total_price(self):
         total = 0
-        for order_item in self.orderitem.set.all():
+        for order_item in self.objects.CartItem.set.all():
             total += order_item.get_total_price()
         self.total_price = total
 
