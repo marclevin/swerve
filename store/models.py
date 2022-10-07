@@ -68,11 +68,42 @@ class Product(models.Model):
             return self.price
 
 
+ORDER_STATUS = (
+    ('Pending', 'Pending'),
+    ('Cancelled', 'Cancelled'),
+    ('Delivered', 'Delivered'),
+)
+
+
 class Order(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     date = models.DateField(default=datetime.datetime.today)
-    status = models.BooleanField(default=False)
+    status = models.CharField(max_length=100, choices=ORDER_STATUS, default='Pending')
     total_price = models.FloatField(default=0)
+    order_number = models.CharField(max_length=100, default="")
+    destination = models.CharField(max_length=100, default="")
+    
+
+    def change_status(self, status):
+        self.status = status
+        self.save()
+
+    # on save call set_total_price
+    def save(self, *args, **kwargs):
+        self.set_total_price()
+        super(Order, self).save(*args, **kwargs)
+
+    def set_total_price(self):
+        total = 0
+        for order_item in self.orderitem.set.all():
+            total += order_item.get_total_price()
+        self.total_price = total
+    
+    @staticmethod
+    def get_order_by_customer(customer_id):
+        return Order.objects.filter(customer=customer_id).order_by('-date')
+        
+    
 
 
 class OrderItem(models.Model):
@@ -86,20 +117,3 @@ class OrderItem(models.Model):
 
     def get_total_price(self):
         return self.quantity * self.price
-
-
-class Invoice(models.Model):
-    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    quantity = models.IntegerField(default=1)
-    destination = models.CharField(max_length=50, default='', blank=True)
-    price = models.IntegerField(default=0)
-    date = models.DateField(default=datetime.datetime.today)
-    status = models.BooleanField(default=False)
-
-    def saveInvoice(self):
-        self.save()
-
-    @staticmethod
-    def get_invoice_by_customer(customer_id):
-        return Invoice.objects.filter(customer=customer_id).order_by('-date')
