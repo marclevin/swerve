@@ -1,3 +1,5 @@
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import get_object_or_404
 from django.core.mail import send_mail
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import AuthenticationForm
@@ -66,6 +68,17 @@ def login_request(request):
     return render(request=request, template_name="pages/login.html", context={"login_form": form})
 
 
+@login_required
+def add_to_cart(request, product_id):
+    product = get_object_or_404(Product, pk=product_id)
+    cart, created = Order.objects.get_or_create(user=request.user)
+    order_item, created = OrderItem.objects.get_or_create(customer=request.user, order=cart, product=product)
+    order_item.quantity += 1
+    order_item.save()
+    messages.success(request, "Successfully added " + product.name + " to your cart")
+    return redirect("pages/index.html")
+
+
 def contact(request):
     if request.method == "POST":
         message_name = request.POST["message-name"]
@@ -87,6 +100,7 @@ def product_by_category(request, category):
     products = Product.objects.filter(category=category_selected)
     context = {'products': products, 'category': category_selected}
     return render(request, 'pages/product_page.html', context)
+
 
 def calculator(request):
     return render(request, 'pages/calculator.html')
