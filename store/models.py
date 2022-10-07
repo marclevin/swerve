@@ -61,6 +61,12 @@ class Product(models.Model):
         if self.image and hasattr(self.image, 'url'):
             return self.image
 
+    def getDiscountPrice(self):
+        if self.discount_price:
+            return self.price - self.discount_price
+        else:
+            return self.price
+
 
 class Order(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)

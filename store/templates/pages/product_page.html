@@ -1,5 +1,6 @@
 {% extends 'master/main.html' %}
 {% load crispy_forms_filters %}
+{% load humanize %}
 {% load static %}
 {% block content %}
 
@@ -24,12 +25,16 @@
                                 {{ product.name }}
                             </h6>
                         </div>
-                        <h6 style="color:#61963f">R{{ product.price }}</h6>    
+                        {%if product.discount_price > 0 %}   
+                        <h6 style="color:#61963f"> <ins>R{{product.getDiscountPrice | floatformat:2 | intcomma }}</ins> R<del>{{ product.price | floatformat:2 | intcomma }}</del> </h6>
                         <div class="new">
                             <span>
-                            New
+                            On Sale!
                             </span>
                         </div>
+                        {% else %}
+                        <h6 style="color:#61963f">R{{ product.price | floatformat:2 | intcomma }}</h6>
+                        {% endif %}
                     </a>
                 </div>
             </div>
