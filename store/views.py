@@ -13,8 +13,12 @@ from django.contrib import messages
 
 
 def index(request):
-    context = {}
-    return render(request, 'pages/index.html')
+    # Picking a random item to be featured, for now it will be ID 1 of product
+    featured_product = Product.objects.get(id=1)
+    # Pick 6 products to be displayed on the home page at random
+    products = Product.objects.all().order_by('?')[:6]
+    context = {'featured_product': featured_product, 'products': products}
+    return render(request, 'pages/index.html', context)
 
 
 def store(request):

@@ -1,192 +1,61 @@
 {% load static %}
+{% load humanize %}
 <section class="shop_section layout_padding">
-    <div class="container">
-        <div class="heading_container heading_center">
-            <h2>
-                Latest Watches
-            </h2>
-        </div>
-        <div class="row">
-            <div class="col-md-6 ">
-                <div class="box">
-                    <a href="">
-                        <div class="img-box">
-                            <img src="{% static 'images/w1.png' %}" alt="">
-                        </div>
-                        <div class="detail-box">
-                            <h6>
-                                Smartwatch
-                            </h6>
-                            <h6>
-                                Price:
-                                <span>
-                    $300
-                  </span>
-                            </h6>
-                        </div>
-                        <div class="new">
-                <span>
-                  Featured
-                </span>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="col-sm-6 col-xl-3">
-                <div class="box">
-                    <a href="">
-                        <div class="img-box">
-                            <img src="{% static 'images/w2.png' %}" alt="">
-                        </div>
-                        <div class="detail-box">
-                            <h6>
-                                Smartwatch
-                            </h6>
-                            <h6>
-                                Price:
-                                <span>
-                    $125
-                  </span>
-                            </h6>
-                        </div>
-                        <div class="new">
-                <span>
-                  New
-                </span>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="col-sm-6 col-xl-3">
-                <div class="box">
-                    <a href="">
-                        <div class="img-box">
-                            <img src="{% static 'images/w3.png' %}" alt="">
-                        </div>
-                        <div class="detail-box">
-                            <h6>
-                                Smartwatch
-                            </h6>
-                            <h6>
-                                Price:
-                                <span>
-                    $110
-                  </span>
-                            </h6>
-                        </div>
-                        <div class="new">
-                <span>
-                  New
-                </span>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="col-sm-6 col-xl-3">
-                <div class="box">
-                    <a href="">
-                        <div class="img-box">
-                            <img src="{% static 'images/w4.png' %}" alt="">
-                        </div>
-                        <div class="detail-box">
-                            <h6>
-                                Smartwatch
-                            </h6>
-                            <h6>
-                                Price:
-                                <span>
-                    $145
-                  </span>
-                            </h6>
-                        </div>
-                        <div class="new">
-                <span>
-                  New
-                </span>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="col-sm-6 col-xl-3">
-                <div class="box">
-                    <a href="">
-                        <div class="img-box">
-                            <img src="{% static 'images/w5.png' %}" alt="">
-                        </div>
-                        <div class="detail-box">
-                            <h6>
-                                Smartwatch
-                            </h6>
-                            <h6>
-                                Price:
-                                <span>
-                    $195
-                  </span>
-                            </h6>
-                        </div>
-                        <div class="new">
-                <span>
-                  New
-                </span>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="col-sm-6  col-xl-3">
-                <div class="box">
-                    <a href="">
-                        <div class="img-box">
-                            <img src="{% static 'images/w6.png' %}" alt="">
-                        </div>
-                        <div class="detail-box">
-                            <h6>
-                                Smartwatch
-                            </h6>
-                            <h6>
-                                Price:
-                                <span>
-                    $170
-                  </span>
-                            </h6>
-                        </div>
-                        <div class="new">
-                <span>
-                  New
-                </span>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="col-sm-6 col-xl-3">
-                <div class="box">
-                    <a href="">
-                        <div class="img-box">
-                            <img src="{% static 'images/w1.png' %}" alt="">
-                        </div>
-                        <div class="detail-box">
-                            <h6>
-                                Smartwatch
-                            </h6>
-                            <h6>
-                                Price:
-                                <span>
-                    $230
-                  </span>
-                            </h6>
-                        </div>
-                        <div class="new">
-                <span>
-                  New
-                </span>
-                        </div>
-                    </a>
-                </div>
-            </div>
-        </div>
-        <div class="btn-box">
-            <a href="">
-                View All
-            </a>
-        </div>
+  <div class="container">
+    <div class="heading_container heading_center">
+      <h2>At a glance..</h2>
     </div>
+    <!-- This will be a statically choosen featured item for the catalogue-->
+    <div class="row">
+      <div class="col-md-6">
+        <div class="box">
+          <a href="">
+            <div class="img-box">
+                <img src="/static/Images/{{ featured_product.getImage }}" alt="">
+            </div>
+            <div class="detail-box">
+              <h6>{{ featured_product.name }}</h6>
+              {%if featured_product.discount_price > 0 %}   
+                        <h6>Price: <span><ins>R{{featured_product.getDiscountPrice | floatformat:2 | intcomma }}</ins> R<del>{{ featured_product.price | floatformat:2 | intcomma }}</del><span> </h6>
+                        <div class="new">
+                        </div>
+                        {% else %}
+                        <h6>Price: <span>R{{ featured_product.price | floatformat:2 | intcomma }}</span></h6>
+                        {% endif %}
+            </div>
+            <div class="new">
+              <span> Featured </span>
+            </div>
+          </a>
+        </div>
+      </div>
+      {% for product in products %}
+      <div class="col-sm-6 col-xl-3">
+        <div class="box">
+          <a href="">
+            <div class="img-box">
+                <img src="/static/Images/{{ product.getImage }}" alt="">
+            </div>
+            <div class="detail-box">
+              <h6>{{product.name}}</h6>
+              <br>
+              {%if product.discount_price > 0 %}   
+              <h6>Price: <span><ins style="color:#61963f">R{{product.getDiscountPrice | floatformat:2 | intcomma }}</ins> R<del>{{product.price | floatformat:2 | intcomma }}</del><span> </h6>
+              <div class="new">
+                  <span>
+                  On Sale!
+                  </span>
+              </div>
+              {% else %}
+              <h6>Price: <span>R{{product.price | floatformat:2 | intcomma }}</span></h6>
+              {% endif %}
+            </div>
+          </a>
+        </div>
+      </div>
+      {% endfor %}
+    <div class="btn-box">
+      <a href={% url 'store' %}> View All </a>
+    </div>
+  </div>
 </section>

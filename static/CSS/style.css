@@ -415,7 +415,7 @@ a:focus {
 .shop_section .box .detail-box {
   display: -webkit-box;
   display: -ms-flexbox;
-  display: flex;
+  display: block;
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;

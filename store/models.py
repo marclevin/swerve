@@ -78,7 +78,8 @@ ORDER_STATUS = (
 class Order(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     date = models.DateField(default=datetime.datetime.today)
-    status = models.CharField(max_length=100, choices=ORDER_STATUS, default='Pending')
+    status = models.CharField(
+        max_length=100, choices=ORDER_STATUS, default='Pending')
     total_price = models.FloatField(default=0)
     order_number = models.CharField(max_length=100, default="")
     destination = models.CharField(max_length=100, default="")
