@@ -82,7 +82,6 @@ class Order(models.Model):
     total_price = models.FloatField(default=0)
     order_number = models.CharField(max_length=100, default="")
     destination = models.CharField(max_length=100, default="")
-    
 
     def change_status(self, status):
         self.status = status
@@ -98,19 +97,22 @@ class Order(models.Model):
         for order_item in self.orderitem.set.all():
             total += order_item.get_total_price()
         self.total_price = total
-    
+
     @staticmethod
     def get_order_by_customer(customer_id):
         return Order.objects.filter(customer=customer_id).order_by('-date')
-        
-    
 
 
-class OrderItem(models.Model):
-    order = models.ForeignKey(Order, on_delete=models.CASCADE)
+class Cart(models.Model):
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
+    total_price = models.FloatField(default=0)
+
+
+class CartItem(models.Model):
+    cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    quantity = models.IntegerField(default=1)
-    price = models.FloatField(default=0)
+    quantity = models.IntegerField()
+    price = models.FloatField()
 
     def __str__(self):
         return f'{self.quantity} of {self.product.name}'

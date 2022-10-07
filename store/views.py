@@ -70,10 +70,10 @@ def login_request(request):
 @login_required
 def add_to_cart(request, product_id):
     product = get_object_or_404(Product, pk=product_id)
-    cart, created = Order.objects.get_or_create(user=request.user)
-    order_item, created = OrderItem.objects.get_or_create(customer=request.user, order=cart, product=product)
-    order_item.quantity += 1
-    order_item.save()
+    cart, created = Cart.objects.get_or_create(customer=request.user)
+    cart_item, created = CartItem.objects.get_or_create(customer=request.user, order=cart, product=product)
+    cart_item.quantity += 1
+    cart_item.save()
     messages.success(request, f"Successfully added {product.name} to your cart")
     return redirect("pages/index.html")
 
@@ -81,10 +81,10 @@ def add_to_cart(request, product_id):
 @login_required
 def remove_from_cart(request, product_id, cart_id):
     product = get_object_or_404(Product, pk=product_id)
-    cart = get_object_or_404(Order, pk=cart_id)
-    order_item = OrderItem.objects.get(Order=cart, product=product)
-    order_item.quantity -= 1
-    order_item.save()
+    cart = get_object_or_404(Cart, pk=cart_id)
+    cart_item = CartItem.objects.get(Order=cart, product=product)
+    cart_item.quantity -= 1
+    cart_item.save()
     messages.success(request, f"Successfully removed one {product.name} from your cart")
 
 
