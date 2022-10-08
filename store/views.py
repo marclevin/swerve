@@ -139,5 +139,4 @@ def calculator(request):
         form = VehicleCalculatorForm(request, data=request.POST)
         vehicle_type = request.POST["weight"]
         height = request.POST["height"]
-        age = request.POST["
     return render(request, 'pages/calculator.html')
