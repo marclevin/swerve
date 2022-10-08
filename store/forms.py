@@ -20,3 +20,20 @@ class newCustomer(UserCreationForm):
         if commit:
             user.save()
         return user
+
+class VehicleCalculatorForm(forms.Form):
+    vehicle_type = forms.ChoiceField(choices=Category.objects.all().values_list('id', 'name'), label='Vehicle Type')
+    vehicle_weight = forms.IntegerField()
+    vehicle_length = forms.IntegerField()
+    vehicle_width = forms.IntegerField()
+    vehicle_height = forms.IntegerField()
+    vehicle_distance = forms.IntegerField()
+
+    def __init__(self, *args, **kwargs):
+        super(VehicleCalculatorForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_id = 'id-exampleForm'
+        self.helper.form_class = 'blueForms'
+        self.helper.form_method = 'post'
+        self.helper.form_action = 'calculate'
+        self.helper.add_input(StrictButton('Calculate', type='submit', css_class='btn-primary'))
