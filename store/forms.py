@@ -4,6 +4,7 @@ from .models import *
 from crispy_forms.helper import FormHelper
 from crispy_forms.bootstrap import StrictButton
 from django.contrib.auth.forms import UserCreationForm
+from django.urls import reverse
 from crispy_forms.layout import Field, Layout
 
 class newCustomer(UserCreationForm):
@@ -21,19 +22,21 @@ class newCustomer(UserCreationForm):
             user.save()
         return user
 
+vehicle_frequency_choices =(
+    ('Once a week', 'Once a week'),
+    ('Once a month', 'Once a month'),
+    ('Once a day', 'Once a day'),
+    ('More than once a day', 'More than once a day'),
+)
 class VehicleCalculatorForm(forms.Form):
     vehicle_type = forms.ChoiceField(choices=Category.objects.all().values_list('id', 'name'), label='Vehicle Type')
-    vehicle_weight = forms.IntegerField()
-    vehicle_length = forms.IntegerField()
-    vehicle_width = forms.IntegerField()
-    vehicle_height = forms.IntegerField()
-    vehicle_distance = forms.IntegerField()
+    vehicle_drive_dist = forms.IntegerField(label='How many kilometers do you drive per day on average?', min_value=0, max_value=1000)
+    vehicle_people_count = forms.IntegerField(label='How many people are typically in your vehicle?', min_value=0, max_value=10)
+    vehicle_frequency = forms.ChoiceField(choices=vehicle_frequency_choices, label='How often do you drive your vehicle?')
 
     def __init__(self, *args, **kwargs):
         super(VehicleCalculatorForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
-        self.helper.form_id = 'id-exampleForm'
-        self.helper.form_class = 'blueForms'
+        self.helper.form_id = 'id-vehicleCalculatorForm'
         self.helper.form_method = 'post'
-        self.helper.form_action = 'calculate'
         self.helper.add_input(StrictButton('Calculate', type='submit', css_class='btn-primary'))

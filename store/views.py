@@ -135,8 +135,15 @@ def product_by_category(request, category):
 
 
 def calculator(request):
+    curtain_check = True
     if request.method == "POST":
-        form = VehicleCalculatorForm(request, data=request.POST)
-        vehicle_type = request.POST["weight"]
-        height = request.POST["height"]
-    return render(request, 'pages/calculator.html')
+        form = VehicleCalculatorForm(request.POST)
+        if form.is_valid():
+            curtain_check = False
+            vehicle_type = form.cleaned_data['vehicle_type']
+    else:
+        curtain_check = True
+
+    form = VehicleCalculatorForm()
+    context={"calculator_form": form, 'curtain_check': curtain_check}
+    return render(request, 'pages/calculator.html', context=context)
