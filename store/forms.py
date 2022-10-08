@@ -4,7 +4,6 @@ from .models import *
 from crispy_forms.helper import FormHelper
 from crispy_forms.bootstrap import StrictButton
 from django.contrib.auth.forms import UserCreationForm
-from django_filters.fields import RangeField
 from crispy_forms.layout import Field, Layout
 
 class newCustomer(UserCreationForm):
