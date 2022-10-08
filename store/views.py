@@ -3,7 +3,7 @@ from django.shortcuts import get_object_or_404
 from django.core.mail import send_mail
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import AuthenticationForm
-from .forms import newCustomer
+from .forms import newCustomer, VehicleCalculatorForm
 from .models import *
 from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
@@ -135,4 +135,15 @@ def product_by_category(request, category):
 
 
 def calculator(request):
-    return render(request, 'pages/calculator.html')
+    curtain_check = True
+    if request.method == "POST":
+        form = VehicleCalculatorForm(request.POST)
+        if form.is_valid():
+            curtain_check = False
+            vehicle_type = form.cleaned_data['vehicle_type']
+    else:
+        curtain_check = True
+
+    form = VehicleCalculatorForm()
+    context={"calculator_form": form, 'curtain_check': curtain_check}
+    return render(request, 'pages/calculator.html', context=context)

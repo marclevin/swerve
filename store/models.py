@@ -39,6 +39,13 @@ class Product(models.Model):
     stock = models.IntegerField()
     image = models.ImageField(upload_to='product_images/', default='afk.jpg')
 
+    # new fields
+    max_speed = models.FloatField(default=0)
+    max_range = models.FloatField(default=0)
+    charge_time = models.FloatField(default=0)
+
+
+
     @staticmethod
     def get_products_by_id(ids):
         return Product.objects.filter(id__in=ids)
