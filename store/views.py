@@ -95,7 +95,7 @@ def remove_from_cart(request, product_id):
     else:
         cart_item.save()
 
-    cart_not_empty = delete_cart_if_empty
+    cart_not_empty = delete_cart_if_empty(request)
     if cart_not_empty:
         return redirect("pages/index.html")
     else:
