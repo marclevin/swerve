@@ -1,5 +1,7 @@
-{% extends "master/main.html" %} {% load static %} {% block content %} {% load
-crispy_forms_filters %}
+{% extends "master/main.html" %} {% load static %}
+ {% block content %}
+  {% load crispy_forms_filters %}
+  {% load crispy_forms_tags %}
 <link href="{% static 'css/curtain.css' %}" rel="stylesheet" />
 <div class="curtain">
   <div class="curtain__wrapper">
