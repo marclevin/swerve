@@ -7,6 +7,9 @@ from .forms import newCustomer, VehicleCalculatorForm
 from .models import *
 from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
+from django.db.models import Sum, Count
+from slick_reporting.views import SlickReportView
+from slick_reporting.fields import SlickReportField
 
 
 # Create your views here.
@@ -66,7 +69,8 @@ def login_request(request):
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
-                messages.info(request, f'You are now logged in as {user.get_username()}.')
+                messages.info(
+                    request, f'You are now logged in as {user.get_username()}.')
                 return redirect('index')
             else:
                 messages.error(request, 'Invalid username or password.')
@@ -80,13 +84,15 @@ def add_to_cart(request, product_id):
     product = get_object_or_404(Product, pk=product_id)
     customer, created = Customer.objects.get_or_create(user=request.user)
     cart, created = Cart.objects.get_or_create(customer=customer, active=True)
-    cart_item, created = CartItem.objects.get_or_create(cart=cart, product=product)
+    cart_item, created = CartItem.objects.get_or_create(
+        cart=cart, product=product)
     cart_item.quantity += 1
     cart_item.save()
     cart.total_price += product.price
     cart.save()
     print(cart.total_price)
-    messages.success(request, f"Successfully added {product.name} to your cart")
+    messages.success(
+        request, f"Successfully added {product.name} to your cart")
     return redirect(request.META['HTTP_REFERER'])
 
 
@@ -97,7 +103,8 @@ def remove_from_cart(request, product_id):
     cart_item.quantity -= 1
     cart.total_price -= product.price
     cart.save()
-    messages.success(request, f"Successfully removed one {product.name} from your cart")
+    messages.success(
+        request, f"Successfully removed one {product.name} from your cart")
     if cart_item.quantity == 0:
         cart_item.delete()
     else:
@@ -126,7 +133,8 @@ def get_cart(request):
 
     try:
         cart = Cart.objects.get(customer__user=request.user, active=True)
-        cart_items = CartItem.objects.filter(cart=cart).select_related("product")
+        cart_items = CartItem.objects.filter(
+            cart=cart).select_related("product")
         context = {'cart_items': cart_items, 'cart': cart}
     except Cart.DoesNotExist:
         context = {'cart_items': CartItem.objects.none()}
@@ -138,7 +146,8 @@ def create_order(request):
     try:
         customer, created = Customer.objects.get_or_create(user=request.user)
         cart = Cart.objects.get(customer__user=request.user, active=True)
-        cart_items = CartItem.objects.filter(cart=cart).select_related("product")
+        cart_items = CartItem.objects.filter(
+            cart=cart).select_related("product")
         order_number = str(f'OR{cart.customer.pk}:{cart.pk}')
         cart.order_number = order_number
         cart.active = False
@@ -148,7 +157,8 @@ def create_order(request):
         # order.save()
         context = {'order': order, 'cart_items': cart_items, 'cart': cart}
     except Cart.DoesNotExist:
-        context = {'order': Order.objects.none(), 'cart_items': CartItem.objects.none(), 'cart': Cart.objects.none()}
+        context = {'order': Order.objects.none(
+        ), 'cart_items': CartItem.objects.none(), 'cart': Cart.objects.none()}
 
     return render(request, 'pages/order.html', context)
 
@@ -194,7 +204,6 @@ def contact(request):
     return render(request, "pages/index.html")
 
 
-
 def product_by_category(request, category):
     category_selected = Category.objects.get(name=category)
     products = Product.objects.filter(category=category_selected)
@@ -208,28 +217,33 @@ def product_filter_search(request, category, filter_products):
     # return render(request, 'pages/product_page.html', context)
     if filter_products == 'cheapest':
         print('filtering by cheapest')
-        products = Product.objects.filter(category=category_selected).order_by('price')
+        products = Product.objects.filter(
+            category=category_selected).order_by('price')
         print(products)
         context = {'products': products, 'category': category_selected}
         return render(request, 'pages/product_page.html', context)
     if filter_products == 'expensive':
         print('filtering by expensive')
-        products = Product.objects.filter(category=category_selected).order_by('-price')
+        products = Product.objects.filter(
+            category=category_selected).order_by('-price')
         context = {'products': products, 'category': category_selected}
         return render(request, 'pages/product_page.html', context)
     if filter_products == 'discount':
         print('filtering by discount')
-        products = Product.objects.filter(category=category_selected, discount_price__gt=0)
+        products = Product.objects.filter(
+            category=category_selected, discount_price__gt=0)
         context = {'products': products, 'category': category_selected}
         return render(request, 'pages/product_page.html', context)
     if filter_products == 'fastest':
         print('filtering by fastest')
-        products = Product.objects.filter(category=category_selected).order_by('-max_speed')
+        products = Product.objects.filter(
+            category=category_selected).order_by('-max_speed')
         context = {'products': products, 'category': category_selected}
         return render(request, 'pages/product_page.html', context)
     if filter_products == 'slowest':
         print('filtering by slowest')
-        products = Product.objects.filter(category=category_selected).order_by('max_speed')
+        products = Product.objects.filter(
+            category=category_selected).order_by('max_speed')
         context = {'products': products, 'category': category_selected}
         return render(request, 'pages/product_page.html', context)
 
@@ -247,3 +261,16 @@ def calculator(request):
     form = VehicleCalculatorForm()
     context = {"calculator_form": form, 'curtain_check': curtain_check}
     return render(request, 'pages/calculator.html', context=context)
+
+
+class TotalOrders(SlickReportView):
+    report_description = 'Some description'
+    report_model = Order
+    date_field = 'date'
+    columns = [
+        SlickReportField.create(Sum, 'total_price', 'Stonks'), ]
+    chart_settings = [{
+        'type': 'column',
+        'data_source': ['Stonks'],
+        'plot_total': True,
+    }, ]
