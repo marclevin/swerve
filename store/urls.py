@@ -9,4 +9,5 @@ urlpatterns = [
     path('logout/', views.logout_request, name='logout'),
     path('store/<str:category>/', views.product_by_category, name='product_by_category'),
     path('calculator/', views.calculator, name='calculator'),
+    path('cart/', views.get_cart, name='cart'),
 ]

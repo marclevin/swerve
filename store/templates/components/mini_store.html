@@ -27,6 +27,9 @@
               <span> Featured </span>
             </div>
           </a>
+           <a  href="{% url 'cart' %}">
+              <i class="fa fa-shopping-cart float-right"></i>
+           </a>
         </div>
       </div>
       {% for product in products %}
@@ -51,11 +54,12 @@
               {% endif %}
             </div>
           </a>
+            <i class="fa fa-shopping-cart float-right"></i>
         </div>
       </div>
       {% endfor %}
     <div class="btn-box">
-      <a href={% url 'store' %}> View All </a>
+      <a href="{% url 'store' %}"> View All </a>
     </div>
   </div>
 </section>

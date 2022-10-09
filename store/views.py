@@ -72,7 +72,7 @@ def login_request(request):
     return render(request=request, template_name="pages/login.html", context={"login_form": form})
 
 
-@login_required
+
 def add_to_cart(request, product_id):
     product = get_object_or_404(Product, pk=product_id)
     cart, created = Cart.objects.get_or_create(customer=request.user)
@@ -83,7 +83,7 @@ def add_to_cart(request, product_id):
     return redirect("pages/index.html")
 
 
-@login_required
+
 def remove_from_cart(request, product_id):
     product = get_object_or_404(Product, pk=product_id)
     cart = Cart.objects.get(customer=request.user)
@@ -109,6 +109,19 @@ def delete_cart_if_empty(request):
         return True
     else:
         cart.delete()
+
+
+def get_cart(request):
+    # try:
+    #     cart = Cart.objects.get(customer__user=request.user)
+    # except Cart.DoesNotExist:
+    #      pass
+    #      return render(request, "pages/login.html")
+
+    # items_in_cart = CartItem.objects.filter(cart=cart)
+    products = Product.objects.filter(price__gte=1170000)
+    context = {'products': products}
+    return render(request, 'pages/cart.html', context)
 
 
 def contact(request):
