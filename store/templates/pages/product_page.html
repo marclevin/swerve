@@ -10,7 +10,9 @@
                 </h2>
             </div>
             <div class="dropdown">
-                <button onclick="myFunction()" class="dropbtn">Search by</button>
+                <button onclick="myFunction()" class="dropbtn bg-success">Search by
+                 <i class="fa fa-arrow-down "></i>
+                </button>
                 <div id="myDropdown" class="dropdown-content">
                     <a href="{% url 'filter_search' category.name  'expensive'%}"> Expensive </a>
                     <a href="{% url 'filter_search' category.name  'cheapest'%}"> Cheapest </a>
