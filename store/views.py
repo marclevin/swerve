@@ -144,7 +144,7 @@ def create_order(request):
         cart.active = False
         cart.save()
         order = Order.objects.create(customer=customer, total_price=cart.total_price, order_number=order_number,
-                                     destination='32 faan street')
+                                     destination=customer.address)
         # order.save()
         context = {'order': order, 'cart_items': cart_items, 'cart': cart}
     except Cart.DoesNotExist:
