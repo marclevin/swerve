@@ -5,6 +5,13 @@
 {% block content %}
     <div class="row d-flex justify-content-center mt-100 mb-100">
 
+
+        {% if orders.count == 0 %}
+        <div class="col-lg-6">
+            <h3 class="text-center">You have no orders yet</h3>
+        </div>
+
+        {% endif %}
         {% for order in orders %}
 
                 <div class="col-lg-6">
