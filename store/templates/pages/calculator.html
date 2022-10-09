@@ -21,10 +21,21 @@
     <div class="curtain__content">
       {%if curtain_check %}
       <form method="POST">
-        <h2>Please fill in this form to calculate your ideal vehicle!</h2>
-        {% csrf_token %} {{ calculator_form |crispy }}
+        <h2>PLEASE FILL IN THIS FORM TO CALCULATE YOUR IDEAL VEHICLE</h2>
+          <br/>
+
+        {% csrf_token %}
+          {% for field in calculator_form %}
+              <div class="float-left">
+
+              {{ field.label }}
+              <br>
+              </div>
+    {{ field }}
+{% endfor %}
+
         <br />
-        <button class="curtain_button" type="submit">Calculate</button>
+        <button class="curtain_button form-control" type="submit">Calculate</button>
         {% else %}
         <div class="calculate_content">
           <div id="calculating_div">

@@ -29,14 +29,14 @@ vehicle_frequency_choices =(
     ('More than once a day', 'More than once a day'),
 )
 class VehicleCalculatorForm(forms.Form):
-    vehicle_type = forms.ChoiceField(choices=Category.objects.all().values_list('id', 'name'), label='Vehicle Type')
-    vehicle_drive_dist = forms.IntegerField(label='How many kilometers do you drive per day on average?', min_value=0, max_value=1000)
-    vehicle_people_count = forms.IntegerField(label='How many people are typically in your vehicle?', min_value=0, max_value=10)
-    vehicle_frequency = forms.ChoiceField(choices=vehicle_frequency_choices, label='How often do you drive your vehicle?')
+    vehicle_type = forms.ChoiceField(choices=Category.objects.all().values_list('id', 'name'), label='Vehicle Type', widget=forms.Select(attrs={'class':'form-control float-left'}))
+    vehicle_drive_dist = forms.IntegerField(label='How many kilometers do you drive per day on average?', min_value=0, max_value=1000, widget=forms.NumberInput(attrs={'class':'form-control'}))
+    vehicle_people_count = forms.IntegerField(label='How many people are typically in your vehicle?', min_value=0, max_value=10, widget=forms.NumberInput(attrs={'class':'form-control'}))
+    vehicle_frequency = forms.ChoiceField(choices=vehicle_frequency_choices, label='How often do you drive your vehicle?', widget=forms.Select(attrs={'class':'form-control'}))
 
     def __init__(self, *args, **kwargs):
         super(VehicleCalculatorForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.form_id = 'id-vehicleCalculatorForm'
         self.helper.form_method = 'post'
-        self.helper.add_input(StrictButton('Calculate', type='submit', css_class='btn-primary'))
+        self.helper.add_input(StrictButton('Calculate', type='submit', css_class='form-control'))
