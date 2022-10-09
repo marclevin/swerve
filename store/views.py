@@ -117,16 +117,16 @@ def delete_cart_if_empty(request):
 
 
 def get_cart(request):
-    if (not request.user.is_authenticated):
-        messages.info(request, 'You must be logged in to view your cart')
-        return redirect('/login')
-    context = {}
+    # if not request.user.is_authenticated:
+    #     messages.info(request, 'You must be logged in to view your cart')
+    #     return redirect('/login')
+
     try:
         cart = Cart.objects.get(customer__user=request.user)
         cart_items = CartItem.objects.filter(cart=cart).select_related("product")
         context = {'cart_items': cart_items}
     except Cart.DoesNotExist:
-        context = {'products': None, 'empty': True}
+        context = {'cart_items': CartItem.objects.none()}
 
     return render(request, 'pages/cart.html', context)
 
