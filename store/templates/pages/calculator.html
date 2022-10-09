@@ -26,8 +26,7 @@
 
         {% csrf_token %}
           {% for field in calculator_form %}
-              <div class="float-left">
-
+              <div class="form-control float-left mb-2 mt-2 bg-dark text-light border-dark">
               {{ field.label }}
               <br>
               </div>
