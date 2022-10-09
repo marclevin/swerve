@@ -51,7 +51,7 @@
                                         <h5 class="mb-0">R {{ item.product.price }}</h5>
                                     </div>
                                     <div class="col-md-1 col-lg-1 col-xl-1 text-end">
-                                        <a href="#!" class="text-danger"><i class="fa fa-trash fa-lg"></i></a>
+                                        <a href="{% url 'remove_from_cart' item.product.pk %}" class="text-danger"><i class="fa fa-trash fa-lg"></i></a>
                                     </div>
                                 </div>
                             </div>

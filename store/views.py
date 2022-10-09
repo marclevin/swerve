@@ -90,7 +90,7 @@ def add_to_cart(request, product_id):
 def remove_from_cart(request, product_id):
     product = get_object_or_404(Product, pk=product_id)
     cart = Cart.objects.get(customer__user=request.user)
-    cart_item = CartItem.objects.get(Order=cart, product=product)
+    cart_item = CartItem.objects.get(cart=cart, product=product)
     cart_item.quantity -= 1
     messages.success(request, f"Successfully removed one {product.name} from your cart")
     if cart_item.quantity == 0:

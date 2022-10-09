@@ -12,6 +12,8 @@ urlpatterns = [
     path('cart/', views.get_cart, name='cart'),
     # url for adding to cart button click on home page
     path('<int:product_id>/', views.add_to_cart, name='add_to_cart'),
+    # url to delete a cart item
+    path('cart/<int:product_id>', views.remove_from_cart, name='remove_from_cart'),
     # filter by
     path('store/<str:category>/<str:filter_products>', views.product_filter_search, name='filter_search'),
 ]
