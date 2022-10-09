@@ -1,4 +1,3 @@
-from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
 from django.core.mail import send_mail
 from django.shortcuts import render, redirect
@@ -35,9 +34,12 @@ def logout_request(request):
 
 
 def register_request(request):
+    isValid = True
+    error_out = ''
     if request.method == 'POST':
         form = newCustomer(request.POST)
         if form.is_valid():
+            isValid = True
             user = form.save()
             login(request, user)
             customer = Customer.objects.create(
@@ -48,9 +50,10 @@ def register_request(request):
             messages.success(request, 'Account created successfully')
             return redirect('index')
         else:
-            messages.error(request, 'Error creating account')
+            isValid = False
+            error_out = form.errors
     form = newCustomer()
-    return render(request, 'pages/register.html', {'register_form': form})
+    return render(request, 'pages/register.html', {'register_form': form, 'valid': isValid, 'error': error_out})
 
 
 def login_request(request):
@@ -110,17 +113,19 @@ def delete_cart_if_empty(request):
     else:
         cart.delete()
 
-
 def get_cart(request):
-    # try:
-    #     cart = Cart.objects.get(customer__user=request.user)
-    # except Cart.DoesNotExist:
-    #      pass
-    #      return render(request, "pages/login.html")
+    if ( not request.user.is_authenticated):
+        messages.info(request, 'You must be logged in to view your cart')
+        return redirect('/login')
+    context = {}
+    try:
+         cart = Cart.objects.get(customer__user=request.user)
+         items_in_cart = CartItem.objects.filter(cart=cart)
+         context = {'products': items_in_cart, 'empty': False}
+    except Cart.DoesNotExist:
+        context = {'products': None, 'empty': True}
+        pass
 
-    # items_in_cart = CartItem.objects.filter(cart=cart)
-    products = Product.objects.filter(price__gte=1170000)
-    context = {'products': products}
     return render(request, 'pages/cart.html', context)
 
 
