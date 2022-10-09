@@ -1,72 +1,68 @@
-{% extends 'master/main.html' %} {% load humanize %} {% load static %} {% block
-content %}
-<section class="shop_section layout_padding">
-  <div class="container">
-    <div class="heading_container heading_center">
-      <h2>{{ category.name }}</h2>
-    </div>
-    <div class="dropdown">
-      <button onclick="myFunction()" class="dropbtn">Search by</button>
-      <div id="myDropdown" class="dropdown-content">
-        <a href="{% url 'filter_search' category.name  'expensive'%}">
-          Expensive
-        </a>
-        <a href="{% url 'filter_search' category.name  'cheapest'%}">
-          Cheapest
-        </a>
-        <a href="{% url 'filter_search' category.name  'discount'%}">
-          On Discount
-        </a>
-        <a href="{% url 'filter_search' category.name  'fastest'%}">
-          Fastest
-        </a>
-        <a href="{% url 'filter_search' category.name  'slowest'%}">
-          Slowest
-        </a>
-      </div>
-    </div>
+{% extends 'master/main.html' %}
+{% load humanize %}
+{% load static %}
+{% block content %}
+    <section class="shop_section layout_padding">
+        <div class="container">
+            <div class="heading_container heading_center">
+                <h2>
+                    {{ category.name }}
+                </h2>
+            </div>
+            <div class="dropdown">
+                <button onclick="myFunction()" class="dropbtn bg-success">Search by
+                 <i class="fa fa-arrow-down "></i>
+                </button>
+                <div id="myDropdown" class="dropdown-content">
+                    <a href="{% url 'filter_search' category.name  'expensive'%}"> Expensive </a>
+                    <a href="{% url 'filter_search' category.name  'cheapest'%}"> Cheapest </a>
+                    <a href="{% url 'filter_search' category.name  'discount'%}"> On Discount </a>
+                     <a href="{% url 'filter_search' category.name  'fastest'%}"> Fastest </a>
+                     <a href="{% url 'filter_search' category.name  'slowest'%}"> Slowest </a>
+                </div>
+            </div>
 
-    <div class="row">
-      {% for product in products %}
-      <div class="col-sm-6 col-xl-3">
-        <div class="box">
-          <a href="">
-            <div class="img-box">
-              <img src="/static/Images/{{ product.getImage }}" alt="" />
+            <div class="row">
+                {% for product in products %}
+                    <div class="col-sm-6 col-xl-3">
+                        <div class="box">
+                            <a href="">
+                                <div class="img-box">
+                                    <img src="/static/Images/{{ product.getImage }}" alt="">
+                                </div>
+                                <div class="detail-box">
+                                    <h6>
+                                        {{ product.name }}
+                                    </h6>
+                                </div>
+                                {% if product.discount_price > 0 %}
+                                    <h6 style="color:#61963f">
+                                        <ins>R{{ product.getDiscountPrice | floatformat:2 | intcomma }}</ins>
+                                        R
+                                        <del>{{ product.price | floatformat:2 | intcomma }}</del>
+                                    </h6>
+                                    <div class="new">
+                            <span>
+                            On Sale!
+                            </span>
+                                    </div>
+                                {% else %}
+                                    <h6 style="color:#61963f">R{{ product.price | floatformat:2 | intcomma }}</h6>
+                                {% endif %}
+                            </a>
+                            <a class="addToCartLink" href="{% url 'add_to_cart'  product.pk %}">
+                                <i class="fa fa-shopping-cart float-right add"></i>
+                            </a>
+                        </div>
+                    </div>
+                {% endfor %}
+                <!-- LOOP -->
             </div>
-            <div class="detail-box">
-              <h6>{{ product.name }}</h6>
-            </div>
-            {% if product.discount_price > 0 %}
-            <h6 style="color: #61963f">
-              <ins
-                >R{{ product.getDiscountPrice | floatformat:2 | intcomma }}</ins
-              >
-              R
-              <del>{{ product.price | floatformat:2 | intcomma }}</del>
-            </h6>
-            <div class="new">
-              <span> On Sale! </span>
-            </div>
-            {% else %}
-            <h6 style="color: #61963f">
-              R{{ product.price | floatformat:2 | intcomma }}
-            </h6>
-            {% endif %}
-          </a>
-          <a href="{% url 'add_to_cart'  product.pk %}">
-            <i class="fa fa-shopping-cart float-right"></i>
-          </a>
         </div>
-      </div>
-      {% endfor %}
-      <!-- LOOP -->
-    </div>
-  </div>
-  <script>
-    function myFunction() {
-      document.getElementById("myDropdown").classList.toggle("show");
-    }
+        <script>
+            function myFunction() {
+                document.getElementById("myDropdown").classList.toggle("show");
+            }
 
     window.onclick = function (event) {
       if (!event.target.matches(".dropbtn")) {
