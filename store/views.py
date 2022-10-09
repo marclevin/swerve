@@ -5,6 +5,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.forms import AuthenticationForm
 from .forms import newCustomer, VehicleCalculatorForm
 from .models import *
+from .calculator import calculate
 from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
 from django.db.models import Sum, Count
@@ -250,16 +251,18 @@ def product_filter_search(request, category, filter_products):
 
 def calculator(request):
     curtain_check = True
+    product_suggested = ''
     if request.method == "POST":
         form = VehicleCalculatorForm(request.POST)
         if form.is_valid():
             curtain_check = False
-            vehicle_type = form.cleaned_data['vehicle_type']
+            product_suggested = calculate(form.cleaned_data)
+            
     else:
         curtain_check = True
 
     form = VehicleCalculatorForm()
-    context = {"calculator_form": form, 'curtain_check': curtain_check}
+    context = {"calculator_form": form, 'curtain_check': curtain_check, 'product_suggested': product_suggested}
     return render(request, 'pages/calculator.html', context=context)
 
 
