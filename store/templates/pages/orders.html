@@ -6,27 +6,31 @@
     <div class="row d-flex justify-content-center mt-100 mb-100">
 
         {% for order in orders %}
-            <div class="col-lg-6">
-                <div class="card">
-                    <div class="card-body text-center">
-                        <h4 class="card-title m-b-0">Order Number: {{ order.order_number }}</h4>
-                    </div>
-                    <ul class="list-style-none">
-                        <li class="d-flex no-block card-body">
 
-                            <div>
-                                <span class="text-muted">Destination: {{ order.destination }} </span>
-                                <span class="text-muted">Track: {{ order.status }} </span>
-                            </div>
-                            <div class="ml-auto">
-                                <div class="text-right">
-                                    <span class="text-muted font-16">{{ order.date }}</span>
+                <div class="col-lg-6">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <a href="{% url 'get_receipt'  order.pk %}">
+                            <h4 class="card-title m-b-0">Order Number: {{ order.order_number }}</h4>
+                            </a>
+                        </div>
+                        <ul class="list-style-none">
+                            <li class="d-flex no-block card-body">
+
+                                <div>
+                                    <span class="text-muted">Destination: {{ order.destination }} </span>
+                                    <span class="text-muted">Track: {{ order.status }} </span>
                                 </div>
-                            </div>
-                        </li>
-                    </ul>
+                                <div class="ml-auto">
+                                    <div class="text-right">
+                                        <span class="text-muted font-16">{{ order.date }}</span>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
+
         {% endfor %}
     </div>
 

@@ -20,6 +20,6 @@ urlpatterns = [
     path('order/', views.create_order, name='create_order'),
     # path to see all previous orders
     path('orders/', views.get_orders, name='get_orders'),
-    #path to get specific receipt
-    # path('receipt/<int:order_id>/', views.get_receipt, name='get_receipt')
+    # path to get specific receipt
+    path('receipt/<int:order_id>/', views.get_receipt, name='get_receipt')
 ]

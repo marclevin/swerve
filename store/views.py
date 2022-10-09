@@ -159,24 +159,20 @@ def get_orders(request):
 
         customer, created = Customer.objects.get_or_create(user=request.user)
         orders = Order.objects.filter(customer=customer)
-
-        # carts = Cart.objects.filter(order_number=order.order_number, active=False)
-        # cart_items = CartItem.objects.get(cart=carts)
-        # context = {'order': order, 'cart_items': cart_items, 'carts': carts}
         context = {'orders': orders}
-        for ord in orders:
-            print(ord.total_price)
-
     except Order.DoesNotExist:
-        # context = {'order': Order.objects.none(), 'cart_items': CartItem.objects.none(), cart: Cart.objects.none()}
-        print("LOL")
         context = {'order': Order.objects.none()}
 
     return render(request, 'pages/orders.html', context)
 
 
-# def get_receipt(request, order_id):
-#     return render(request, 'pages/receipt.html')
+def get_receipt(request, order_id):
+    order = Order.objects.get(pk=order_id)
+    cart = Cart.objects.get(order_number=order.order_number, active=False)
+    cart_items = CartItem.objects.filter(cart=cart)
+    context = {'order': order, 'cart_items': cart_items, 'cart': cart}
+
+    return render(request, 'pages/receipt.html', context)
 
 
 def contact(request):
