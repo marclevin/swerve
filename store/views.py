@@ -83,6 +83,9 @@ def add_to_cart(request, product_id):
     cart_item, created = CartItem.objects.get_or_create(cart=cart, product=product)
     cart_item.quantity += 1
     cart_item.save()
+    cart.total_price += product.price
+    cart.save()
+    print(cart.total_price)
     messages.success(request, f"Successfully added {product.name} to your cart")
     return redirect(request.META['HTTP_REFERER'])
 
@@ -92,6 +95,8 @@ def remove_from_cart(request, product_id):
     cart = Cart.objects.get(customer__user=request.user)
     cart_item = CartItem.objects.get(cart=cart, product=product)
     cart_item.quantity -= 1
+    cart.total_price -= product.price
+    cart.save()
     messages.success(request, f"Successfully removed one {product.name} from your cart")
     if cart_item.quantity == 0:
         cart_item.delete()
@@ -122,7 +127,7 @@ def get_cart(request):
     try:
         cart = Cart.objects.get(customer__user=request.user)
         cart_items = CartItem.objects.filter(cart=cart).select_related("product")
-        context = {'cart_items': cart_items}
+        context = {'cart_items': cart_items, 'cart': cart}
     except Cart.DoesNotExist:
         context = {'cart_items': CartItem.objects.none()}
 
