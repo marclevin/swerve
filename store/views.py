@@ -35,9 +35,12 @@ def logout_request(request):
 
 
 def register_request(request):
+    isValid = True
+    error_out = ''
     if request.method == 'POST':
         form = newCustomer(request.POST)
         if form.is_valid():
+            isValid = True
             user = form.save()
             login(request, user)
             customer = Customer.objects.create(
@@ -48,9 +51,10 @@ def register_request(request):
             messages.success(request, 'Account created successfully')
             return redirect('index')
         else:
-            messages.error(request, 'Error creating account')
+            isValid = False
+            error_out = form.errors
     form = newCustomer()
-    return render(request, 'pages/register.html', {'register_form': form})
+    return render(request, 'pages/register.html', {'register_form': form, 'valid': isValid, 'error': error_out})
 
 
 def login_request(request):
@@ -113,19 +117,18 @@ def delete_cart_if_empty(request):
 
 
 def get_cart(request):
+    if (not request.user.is_authenticated):
+        messages.info(request, 'You must be logged in to view your cart')
+        return redirect('/login')
+    context = {}
     try:
         cart = Cart.objects.get(customer__user=request.user)
         cart_items = CartItem.objects.filter(cart=cart).select_related("product")
         context = {'cart_items': cart_items}
-        return render(request, 'pages/cart.html', context)
     except Cart.DoesNotExist:
-        pass
-        return render(request, "pages/login.html")
+        context = {'products': None, 'empty': True}
 
-    # items_in_cart = CartItem.objects.filter(cart=cart)
-    # products = Product.objects.filter(price__gte=1170000)
-    # context = {'products': products}
-    # return render(request, 'pages/cart.html', context)
+    return render(request, 'pages/cart.html', context)
 
 
 def contact(request):
