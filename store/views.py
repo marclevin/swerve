@@ -154,6 +154,9 @@ def create_order(request):
 
 
 def get_orders(request):
+    if not request.user.is_authenticated:
+        messages.info(request, 'You must be logged in to view orders')
+        return redirect('/login')
     context = {}
     try:
 
