@@ -14,6 +14,7 @@ class newCustomer(UserCreationForm):
     class Meta:
         model = User
         fields = ['username', 'address', 'email', 'password1', 'password2']
+        widget = forms.TextInput(attrs={'class': 'form-control float-left'})
 
     def save(self, commit=True):
         user = super(newCustomer, self).save(commit=False)
