@@ -79,7 +79,7 @@ def login_request(request):
 def add_to_cart(request, product_id):
     product = get_object_or_404(Product, pk=product_id)
     customer, created = Customer.objects.get_or_create(user=request.user)
-    cart, created = Cart.objects.get_or_create(customer=customer)
+    cart, created = Cart.objects.get_or_create(customer=customer, active=True)
     cart_item, created = CartItem.objects.get_or_create(cart=cart, product=product)
     cart_item.quantity += 1
     cart_item.save()
@@ -92,7 +92,7 @@ def add_to_cart(request, product_id):
 
 def remove_from_cart(request, product_id):
     product = get_object_or_404(Product, pk=product_id)
-    cart = Cart.objects.get(customer__user=request.user)
+    cart = Cart.objects.get(customer__user=request.user, active=True)
     cart_item = CartItem.objects.get(cart=cart, product=product)
     cart_item.quantity -= 1
     cart.total_price -= product.price
@@ -111,7 +111,7 @@ def remove_from_cart(request, product_id):
 
 
 def delete_cart_if_empty(request):
-    cart = Cart.objects.get(customer__user=request.user)
+    cart = Cart.objects.get(customer__user=request.user, active=True)
     any_cart_items = CartItem.objects.filter(cart=cart)
     if any_cart_items.exists():
         return True
@@ -125,7 +125,7 @@ def get_cart(request):
         return redirect('/login')
 
     try:
-        cart = Cart.objects.get(customer__user=request.user)
+        cart = Cart.objects.get(customer__user=request.user, active=True)
         cart_items = CartItem.objects.filter(cart=cart).select_related("product")
         context = {'cart_items': cart_items, 'cart': cart}
     except Cart.DoesNotExist:
@@ -137,9 +137,12 @@ def get_cart(request):
 def create_order(request):
     try:
         customer, created = Customer.objects.get_or_create(user=request.user)
-        cart = Cart.objects.get(customer__user=request.user)
+        cart = Cart.objects.get(customer__user=request.user, active=True)
         cart_items = CartItem.objects.filter(cart=cart).select_related("product")
         order_number = str(f'OR{cart.customer.pk}:{cart.pk}')
+        cart.order_number = order_number
+        cart.active = False
+        cart.save()
         order = Order.objects.create(customer=customer, total_price=cart.total_price, order_number=order_number,
                                      destination='32 faan street')
         order.save()

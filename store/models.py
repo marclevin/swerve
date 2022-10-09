@@ -113,7 +113,9 @@ class Order(models.Model):
 
 class Cart(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
+    active = models.BooleanField(default=True)
     total_price = models.FloatField(default=0)
+    order_number = models.CharField(max_length=100, default="")
 
 
 class CartItem(models.Model):
@@ -121,6 +123,7 @@ class CartItem(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.IntegerField(default=0)
     price = models.FloatField(default=0)
+
 
     def __str__(self):
         return f'{self.quantity} of {self.product.name}'
