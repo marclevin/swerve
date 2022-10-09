@@ -35,9 +35,46 @@
 /*}*/
 
 
-.fa-spin-hover:hover {
-    -webkit-animation: spin 2s infinite linear;
-    -moz-animation: spin 2s infinite linear;
-    -o-animation: spin 2s infinite linear;
-    animation: spin 2s infinite linear;
+.add-to-cart:hover{
+ animation: bounce 2s infinite; //other browsers
+   -webkit-animation: bounce 2s infinite; //webkit browsers
+   -moz-animation: bounce 2s infinite; //firefox
+   -o-animation: bounce 2s infinite; //opera
+}
+
+@-webkit-keyframes bounce {
+    0%,
+    100% {
+       -webkit-transform: translateY(0);
+    }
+    50% {
+        -webkit-transform: translateY(-5px);
+    }
+}
+@-moz-keyframes bounce {
+    0%,
+    100% {
+       -moz-transform: translateY(0);
+    }
+    50% {
+       -moz-transform: translateY(-5px);
+    }
+}
+@-o-keyframes bounce {
+    0%,
+    100% {
+       -o-transform: translateY(0);
+    }
+    50% {
+       -o-transform: translateY(-5px);
+    }
+}
+@keyframes bounce {
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-5px);
+    }
 }
