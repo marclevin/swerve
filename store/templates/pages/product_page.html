@@ -50,8 +50,8 @@
                                     <h6 style="color:#61963f">R{{ product.price | floatformat:2 | intcomma }}</h6>
                                 {% endif %}
                             </a>
-                            <a class="addToCartLink" href="{% url 'add_to_cart'  product.pk %}">
-                                <i class="fa fa-shopping-cart float-right add"></i>
+                            <a class="addToCart" href="{% url 'add_to_cart'  product.pk %}">
+                                <i class="fa fa-shopping-cart float-right  fa-flip-horizontal " style="--fa-animation-duration: 0.5s;"></i>
                             </a>
                         </div>
                     </div>
