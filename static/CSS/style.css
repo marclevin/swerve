@@ -171,8 +171,8 @@ a:focus {
 
 
 .custom_nav-container .navbar-nav .nav-item:hover .nav-link, .custom_nav-container .navbar-nav .nav-item.active .nav-link {
-  color: #000000;
-  background-color: #1ae913; /* temp color */
+  color: #ffffff;
+  background-color: #61963f; /* temp color */
 }
 
 .custom_nav-container .navbar-toggler {
