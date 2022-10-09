@@ -1,95 +1,95 @@
 {% extends "master/main.html" %} {% load static %}
- {% block content %}
-  {% load crispy_forms_filters %}
-  {% load crispy_forms_tags %}
-<link href="{% static 'css/curtain.css' %}" rel="stylesheet" />
-<div class="curtain">
-  <div class="curtain__wrapper">
-    {%if not curtain_check %}
-    <input type="checkbox" id="calc_check" name="calc_check" />
-    {% endif %}
-    <div class="curtain__panel curtain__panel--left">
-      <div class="curtain_chain--left">
-        <img
-          src="{% static 'images/deco_images/left_chain.png' %}"
-          alt="lchain"
-        />
-      </div>
-    </div>
-    <!-- curtain__panel -->
+{% block content %}
+    {% load crispy_forms_filters %}
+    {% load crispy_forms_tags %}
+    <link href="{% static 'css/curtain.css' %}" rel="stylesheet"/>
+    <div class="curtain">
+        <div class="curtain__wrapper">
+            {% if not curtain_check %}
+                <input type="checkbox" id="calc_check" name="calc_check"/>
+            {% endif %}
+            <div class="curtain__panel curtain__panel--left">
+                <div class="curtain_chain--left">
+                    <img
+                            src="{% static 'images/deco_images/left_chain.png' %}"
+                            alt="lchain"
+                    />
+                </div>
+            </div>
+            <!-- curtain__panel -->
 
-    <div class="curtain__content">
-      {%if curtain_check %}
-      <form method="POST">
-        <h2>PLEASE FILL IN THIS FORM TO CALCULATE YOUR IDEAL VEHICLE</h2>
-          <br/>
+            <div class="curtain__content">
+                {% if curtain_check %}
+                    <form method="POST">
+                    <h2>PLEASE FILL IN THIS FORM TO CALCULATE YOUR IDEAL VEHICLE</h2>
+                    <br/>
 
-        {% csrf_token %}
-          {% for field in calculator_form %}
-              <div class="form-control float-left mb-2 mt-2 bg-dark text-light border-dark">
-              {{ field.label }}
-              <br>
-              </div>
-    {{ field }}
-{% endfor %}
+                    {% csrf_token %}
+                    {% for field in calculator_form %}
+                        <div class="form-control float-left mb-2 mt-2 bg-dark text-light border-dark">
+                            {{ field.label }}
+                            <br>
+                        </div>
+                        {{ field }}
+                    {% endfor %}
 
-        <br />
-        <button class="curtain_button form-control" type="submit">Calculate</button>
-        {% else %}
-        <div class="calculate_content">
-          <div id="calculating_div">
-            <h2>Calculating...</h2>
-          </div>
-          <div id="result_div" style="display: none">
-            <h2>Result:</h2>
-            <h3>{{product_suggested.name }}</h3>
-            <div class="img-box">
-              <img src="/static/Images/{{ product_suggested.getImage }}" alt="">
-          </div>
-          </div>
+                    <br/>
+                    <button class="curtain_button form-control" type="submit">Calculate</button>
+                {% else %}
+                    <div class="calculate_content">
+                        <div id="calculating_div">
+                            <h2>Calculating...</h2>
+                        </div>
+                        <div id="result_div" style="display: none">
+                            <h2>Result:</h2>
+                            <h3>{{ product_suggested.name }}</h3>
+                            <div class="img-box">
+                                <img src="/static/Images/{{ product_suggested.getImage }}" alt="">
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+                </form>
+            </div>
+
+            <div class="curtain__panel curtain__panel--right">
+                <div class="curtain_chain--right">
+                    <img
+                            src="{% static 'images/deco_images/right_chain.png' %}"
+                            alt="rchain"
+                    />
+                </div>
+            </div>
+            <!-- curtain__panel -->
         </div>
-        {% endif%}
-      </form>
+        <!-- curtain__wrapper -->
     </div>
+    <!-- curtain -->
 
-    <div class="curtain__panel curtain__panel--right">
-      <div class="curtain_chain--right">
-        <img
-          src="{% static 'images/deco_images/right_chain.png' %}"
-          alt="rchain"
-        />
-      </div>
-    </div>
-    <!-- curtain__panel -->
-  </div>
-  <!-- curtain__wrapper -->
-</div>
-<!-- curtain -->
+    <script>
+        window.onload = function () {
+            close_curtain();
+            setTimeout("open_curtain()", 2000);
+        };
+        window.time = 0;
 
-<script>
-  window.onload = function () {
-    close_curtain();
-    setTimeout("open_curtain()", 2000);
-  };
-  window.time = 0;
+        function open_curtain() {
+            document.getElementById("calc_check").setAttribute("disabled", false);
+            document.getElementById("calc_check").checked = false;
+            document.getElementById("calculating_div").style.display = "none";
+            document.getElementById("result_div").style.display = "block";
+            document.getElementById("calc_check").setAttribute("disabled", true);
+            document.getElementById("calc_check").style.display = "none";
+        }
 
-  function open_curtain() {
-    document.getElementById("calc_check").setAttribute("disabled", false);
-    document.getElementById("calc_check").checked = false;
-    document.getElementById("calculating_div").style.display = "none";
-    document.getElementById("result_div").style.display = "block";
-    document.getElementById("calc_check").setAttribute("disabled", true);
-    document.getElementById("calc_check").style.display = "none";
-  }
-
-  function close_curtain() {
-    document.getElementById("calc_check").setAttribute("disabled", true);
-    document.getElementById("calculating_div").style.display = "block";
-    document.getElementById("result_div").style.display = "none";
-    document.getElementById("calc_check").checked = true;
-    document.getElementById("calc_check").setAttribute("disabled", false);
-    document.getElementById("calc_check").style.display = "none";
-  }
-</script>
+        function close_curtain() {
+            document.getElementById("calc_check").setAttribute("disabled", true);
+            document.getElementById("calculating_div").style.display = "block";
+            document.getElementById("result_div").style.display = "none";
+            document.getElementById("calc_check").checked = true;
+            document.getElementById("calc_check").setAttribute("disabled", false);
+            document.getElementById("calc_check").style.display = "none";
+        }
+    </script>
 
 {% endblock content %}
