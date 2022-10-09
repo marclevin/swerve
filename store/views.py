@@ -115,9 +115,9 @@ def delete_cart_if_empty(request):
 
 
 def get_cart(request):
-    # if not request.user.is_authenticated:
-    #     messages.info(request, 'You must be logged in to view your cart')
-    #     return redirect('/login')
+    if not request.user.is_authenticated:
+        messages.info(request, 'You must be logged in to view your cart')
+        return redirect('/login')
 
     try:
         cart = Cart.objects.get(customer__user=request.user)
