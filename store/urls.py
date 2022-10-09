@@ -16,4 +16,6 @@ urlpatterns = [
     path('cart/<int:product_id>', views.remove_from_cart, name='remove_from_cart'),
     # filter by
     path('store/<str:category>/<str:filter_products>', views.product_filter_search, name='filter_search'),
+    # url to creat order
+    path('order/', views.create_order, name='create_order')
 ]

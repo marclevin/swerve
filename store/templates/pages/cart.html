@@ -31,9 +31,9 @@
                                     <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
                                         <button class="btn btn-link px-2"
                                                 onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
-                                             <a href="{% url 'remove_from_cart'  item.product.pk %}">
-                                            <i class="fa fa-minus"></i>
-                                             </a>
+                                            <a href="{% url 'remove_from_cart'  item.product.pk %}">
+                                                <i class="fa fa-minus"></i>
+                                            </a>
                                         </button>
 
                                         <input id="form1" min="0" name="quantity" value="{{ item.quantity }}"
@@ -42,16 +42,17 @@
 
                                         <button class="btn btn-link px-2"
                                                 onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
-                                             <a href="{% url 'add_to_cart'  item.product.pk %}">
-                                            <i class="fa fa-plus"></i>
-                                             </a>
+                                            <a href="{% url 'add_to_cart'  item.product.pk %}">
+                                                <i class="fa fa-plus"></i>
+                                            </a>
                                         </button>
                                     </div>
                                     <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
                                         <h5 class="mb-0">R {{ item.product.price }}</h5>
                                     </div>
                                     <div class="col-md-1 col-lg-1 col-xl-1 text-end">
-                                        <a href="{% url 'remove_from_cart' item.product.pk %}" class="text-danger"><i class="fa fa-trash fa-lg"></i></a>
+                                        <a href="{% url 'remove_from_cart' item.product.pk %}" class="text-danger"><i
+                                                class="fa fa-trash fa-lg"></i></a>
                                     </div>
                                 </div>
                             </div>
@@ -79,7 +80,7 @@
                             </div>
                         </div>
 
-                         <div class="card mb-4">
+                        <div class="card mb-4">
                             <div class="card-body p-4 d-flex flex-row">
                                 <div class="form-outline flex-fill">
 
@@ -92,8 +93,10 @@
 
                         <div class="card">
                             <div class="card-body">
-                                <button type="button" class="btn btn-success btn-block btn-lg">Place Order
-                                </button>
+                                <a href="{% url 'create_order' %}">
+                                    <button type="button" class="btn btn-success btn-block btn-lg">Place Order
+                                    </button>
+                                </a>
                             </div>
                         </div>
                     {% endif %}

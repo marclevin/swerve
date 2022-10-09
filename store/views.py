@@ -134,6 +134,22 @@ def get_cart(request):
     return render(request, 'pages/cart.html', context)
 
 
+def create_order(request):
+    try:
+        customer, created = Customer.objects.get_or_create(user=request.user)
+        cart = Cart.objects.get(customer__user=request.user)
+        cart_items = CartItem.objects.filter(cart=cart).select_related("product")
+        order_number = str(f'OR{cart.customer.pk}:{cart.pk}')
+        order = Order.objects.create(customer=customer, total_price=cart.total_price, order_number=order_number,
+                                     destination='32 faan street')
+        order.save()
+        context = {'order': order, 'cart_items': cart_items, 'cart': cart}
+    except Cart.DoesNotExist:
+        context = {'order': Order.objects.none(), 'cart_items': CartItem.objects.none(), cart: Cart.objects.none()}
+
+    return render(request, 'pages/order.html', context)
+
+
 def contact(request):
     if request.method == "POST":
         message_name = request.POST["message-name"]

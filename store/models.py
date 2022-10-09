@@ -96,15 +96,15 @@ class Order(models.Model):
         self.save()
 
     # on save call set_total_price
-    def save(self, *args, **kwargs):
-        self.set_total_price()
-        super(Order, self).save(*args, **kwargs)
+    # def save(self, *args, **kwargs):
+    #     self.set_total_price()
+    #     super(Order, self).save(*args, **kwargs)
 
-    def set_total_price(self):
-        total = 0
-        for order_item in self.objects.CartItem.set.all():
-            total += order_item.get_total_price()
-        self.total_price = total
+    # def set_total_price(self):
+    #     total = 0
+    #     for order_item in self.objects.CartItem.set.all():
+    #         total += order_item.get_total_price()
+    #     self.total_price = total
 
     @staticmethod
     def get_order_by_customer(customer_id):
