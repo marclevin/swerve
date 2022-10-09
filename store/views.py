@@ -100,9 +100,9 @@ def remove_from_cart(request, product_id):
 
     cart_not_empty = delete_cart_if_empty(request)
     if cart_not_empty:
-        return redirect('index')
+        return redirect(request.META['HTTP_REFERER'])
     else:
-        return redirect('index')
+        return redirect(request.META['HTTP_REFERER'])
 
 
 def delete_cart_if_empty(request):
@@ -170,6 +170,16 @@ def product_filter_search(request, category, filter_products):
     if filter_products == 'discount':
         print('filtering by discount')
         products = Product.objects.filter(category=category_selected, discount_price__gt=0)
+        context = {'products': products, 'category': category_selected}
+        return render(request, 'pages/product_page.html', context)
+    if filter_products == 'fastest':
+        print('filtering by fastest')
+        products = Product.objects.filter(category=category_selected).order_by('-max_speed')
+        context = {'products': products, 'category': category_selected}
+        return render(request, 'pages/product_page.html', context)
+    if filter_products == 'slowest':
+        print('filtering by slowest')
+        products = Product.objects.filter(category=category_selected).order_by('max_speed')
         context = {'products': products, 'category': category_selected}
         return render(request, 'pages/product_page.html', context)
 
