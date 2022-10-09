@@ -145,12 +145,38 @@ def create_order(request):
         cart.save()
         order = Order.objects.create(customer=customer, total_price=cart.total_price, order_number=order_number,
                                      destination='32 faan street')
-        order.save()
+        # order.save()
         context = {'order': order, 'cart_items': cart_items, 'cart': cart}
     except Cart.DoesNotExist:
-        context = {'order': Order.objects.none(), 'cart_items': CartItem.objects.none(), cart: Cart.objects.none()}
+        context = {'order': Order.objects.none(), 'cart_items': CartItem.objects.none(), 'cart': Cart.objects.none()}
 
     return render(request, 'pages/order.html', context)
+
+
+def get_orders(request):
+    context = {}
+    try:
+
+        customer, created = Customer.objects.get_or_create(user=request.user)
+        orders = Order.objects.filter(customer=customer)
+
+        # carts = Cart.objects.filter(order_number=order.order_number, active=False)
+        # cart_items = CartItem.objects.get(cart=carts)
+        # context = {'order': order, 'cart_items': cart_items, 'carts': carts}
+        context = {'orders': orders}
+        for ord in orders:
+            print(ord.total_price)
+
+    except Order.DoesNotExist:
+        # context = {'order': Order.objects.none(), 'cart_items': CartItem.objects.none(), cart: Cart.objects.none()}
+        print("LOL")
+        context = {'order': Order.objects.none()}
+
+    return render(request, 'pages/orders.html', context)
+
+
+# def get_receipt(request, order_id):
+#     return render(request, 'pages/receipt.html')
 
 
 def contact(request):
@@ -167,6 +193,7 @@ def contact(request):
             recipient_list=["@gmail.com"],
         )
     return render(request, "pages/index.html")
+
 
 
 def product_by_category(request, category):

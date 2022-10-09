@@ -16,6 +16,10 @@ urlpatterns = [
     path('cart/<int:product_id>', views.remove_from_cart, name='remove_from_cart'),
     # filter by
     path('store/<str:category>/<str:filter_products>', views.product_filter_search, name='filter_search'),
-    # url to creat order
-    path('order/', views.create_order, name='create_order')
+    # url to create order
+    path('order/', views.create_order, name='create_order'),
+    # path to see all previous orders
+    path('orders/', views.get_orders, name='get_orders'),
+    #path to get specific receipt
+    # path('receipt/<int:order_id>/', views.get_receipt, name='get_receipt')
 ]

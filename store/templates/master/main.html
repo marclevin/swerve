@@ -95,6 +95,9 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'cart' %}">Cart</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'get_orders' %}">Orders</a>
+                    </li>
                 </ul>
 
                 {% if user.is_authenticated %}

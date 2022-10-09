@@ -1,0 +1,33 @@
+{% extends 'master/main.html' %}
+{% load crispy_forms_filters %}
+{% load humanize %}
+{% load static %}
+{% block content %}
+    <div class="row d-flex justify-content-center mt-100 mb-100">
+
+        {% for order in orders %}
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <h4 class="card-title m-b-0">Order Number: {{ order.order_number }}</h4>
+                    </div>
+                    <ul class="list-style-none">
+                        <li class="d-flex no-block card-body">
+
+                            <div>
+                                <span class="text-muted">Destination: {{ order.destination }} </span>
+                                <span class="text-muted">Track: {{ order.status }} </span>
+                            </div>
+                            <div class="ml-auto">
+                                <div class="text-right">
+                                    <span class="text-muted font-16">{{ order.date }}</span>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+{% endblock content %}
