@@ -87,8 +87,6 @@ def add_to_cart(request, product_id):
     return redirect(request.META['HTTP_REFERER'])
 
 
-
-
 def remove_from_cart(request, product_id):
     product = get_object_or_404(Product, pk=product_id)
     cart = Cart.objects.get(customer__user=request.user)
@@ -152,6 +150,28 @@ def product_by_category(request, category):
     products = Product.objects.filter(category=category_selected)
     context = {'products': products, 'category': category_selected}
     return render(request, 'pages/product_page.html', context)
+
+
+def product_filter_search(request, category, filter_products):
+    category_selected = Category.objects.get(name=category)
+    # context = {'products': products, 'category': category_selected}
+    # return render(request, 'pages/product_page.html', context)
+    if filter_products == 'cheapest':
+        print('filtering by cheapest')
+        products = Product.objects.filter(category=category_selected).order_by('price')
+        print(products)
+        context = {'products': products, 'category': category_selected}
+        return render(request, 'pages/product_page.html', context)
+    if filter_products == 'expensive':
+        print('filtering by expensive')
+        products = Product.objects.filter(category=category_selected).order_by('-price')
+        context = {'products': products, 'category': category_selected}
+        return render(request, 'pages/product_page.html', context)
+    if filter_products == 'discount':
+        print('filtering by discount')
+        products = Product.objects.filter(category=category_selected, discount_price__gt=0)
+        context = {'products': products, 'category': category_selected}
+        return render(request, 'pages/product_page.html', context)
 
 
 def calculator(request):
