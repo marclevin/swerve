@@ -7,6 +7,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse
 from crispy_forms.layout import Field, Layout
 
+
 class newCustomer(UserCreationForm):
     email = forms.EmailField(required=True)
     address = forms.CharField(required=False)
@@ -14,7 +15,13 @@ class newCustomer(UserCreationForm):
     class Meta:
         model = User
         fields = ['username', 'address', 'email', 'password1', 'password2']
-        widget = forms.TextInput(attrs={'class': 'form-control float-left'})
+        widgets = {
+            'username': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Username'}),
+            'address': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'address'}),
+            'email': forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Email'}),
+            'password1': forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Password'}),
+            'password2': forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Password Again'}),
+        }
 
     def save(self, commit=True):
         user = super(newCustomer, self).save(commit=False)
@@ -23,17 +30,25 @@ class newCustomer(UserCreationForm):
             user.save()
         return user
 
-vehicle_frequency_choices =(
+
+vehicle_frequency_choices = (
     ('Once a week', 'Once a week'),
     ('Once a month', 'Once a month'),
     ('Once a day', 'Once a day'),
     ('More than once a day', 'More than once a day'),
 )
+
+
 class VehicleCalculatorForm(forms.Form):
-    vehicle_type = forms.ChoiceField(choices=Category.objects.all().values_list('id', 'name'), label='Vehicle Type', widget=forms.Select(attrs={'class':'form-control float-left'}))
-    vehicle_drive_dist = forms.IntegerField(label='How many kilometers do you drive per day on average?', min_value=0, max_value=1000, widget=forms.NumberInput(attrs={'class':'form-control'}))
-    vehicle_people_count = forms.IntegerField(label='How many people are typically in your vehicle?', min_value=0, max_value=10, widget=forms.NumberInput(attrs={'class':'form-control'}))
-    vehicle_frequency = forms.ChoiceField(choices=vehicle_frequency_choices, label='How often do you drive your vehicle?', widget=forms.Select(attrs={'class':'form-control'}))
+    vehicle_type = forms.ChoiceField(choices=Category.objects.all().values_list('id', 'name'), label='Vehicle Type',
+                                     widget=forms.Select(attrs={'class': 'form-control float-left'}))
+    vehicle_drive_dist = forms.IntegerField(label='How many kilometers do you drive per day on average?', min_value=0,
+                                            max_value=1000, widget=forms.NumberInput(attrs={'class': 'form-control'}))
+    vehicle_people_count = forms.IntegerField(label='How many people are typically in your vehicle?', min_value=0,
+                                              max_value=10, widget=forms.NumberInput(attrs={'class': 'form-control'}))
+    vehicle_frequency = forms.ChoiceField(choices=vehicle_frequency_choices,
+                                          label='How often do you drive your vehicle?',
+                                          widget=forms.Select(attrs={'class': 'form-control'}))
 
     def __init__(self, *args, **kwargs):
         super(VehicleCalculatorForm, self).__init__(*args, **kwargs)
