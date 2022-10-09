@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.forms',
     'store',
     'crispy_forms',
+    'slick_reporting',
 ]
 
 MIDDLEWARE = [

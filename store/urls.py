@@ -21,5 +21,7 @@ urlpatterns = [
     # path to see all previous orders
     path('orders/', views.get_orders, name='get_orders'),
     # path to get specific receipt
-    path('receipt/<int:order_id>/', views.get_receipt, name='get_receipt')
+    path('receipt/<int:order_id>/', views.get_receipt, name='get_receipt'),
+    # path for report temp
+    path('report/', views.TotalOrders.as_view())
 ]

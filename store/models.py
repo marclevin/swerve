@@ -38,7 +38,6 @@ class Product(models.Model):
     weight = models.FloatField(default=0)
     stock = models.IntegerField()
     image = models.ImageField(upload_to='product_images/', default='afk.jpg')
-
     # new fields
     max_speed = models.FloatField(default=0)
     max_range = models.FloatField(default=0)
