@@ -72,21 +72,22 @@ def login_request(request):
     return render(request=request, template_name="pages/login.html", context={"login_form": form})
 
 
-
 def add_to_cart(request, product_id):
     product = get_object_or_404(Product, pk=product_id)
-    cart, created = Cart.objects.get_or_create(customer=request.user)
-    cart_item, created = CartItem.objects.get_or_create(customer=request.user, order=cart, product=product)
+    customer, created = Customer.objects.get_or_create(user=request.user)
+    cart, created = Cart.objects.get_or_create(customer=customer)
+    cart_item, created = CartItem.objects.get_or_create(cart=cart, product=product)
     cart_item.quantity += 1
     cart_item.save()
     messages.success(request, f"Successfully added {product.name} to your cart")
-    return redirect("pages/index.html")
+    return redirect(request.META['HTTP_REFERER'])
+
 
 
 
 def remove_from_cart(request, product_id):
     product = get_object_or_404(Product, pk=product_id)
-    cart = Cart.objects.get(customer=request.user)
+    cart = Cart.objects.get(customer__user=request.user)
     cart_item = CartItem.objects.get(Order=cart, product=product)
     cart_item.quantity -= 1
     messages.success(request, f"Successfully removed one {product.name} from your cart")
@@ -97,13 +98,13 @@ def remove_from_cart(request, product_id):
 
     cart_not_empty = delete_cart_if_empty(request)
     if cart_not_empty:
-        return redirect("pages/index.html")
+        return redirect('index')
     else:
-        return redirect("pages/index.html")
+        return redirect('index')
 
 
 def delete_cart_if_empty(request):
-    cart = Cart.objects.get(customer=request.user)
+    cart = Cart.objects.get(customer__user=request.user)
     any_cart_items = CartItem.objects.filter(cart=cart)
     if any_cart_items.exists():
         return True
@@ -112,16 +113,19 @@ def delete_cart_if_empty(request):
 
 
 def get_cart(request):
-    # try:
-    #     cart = Cart.objects.get(customer__user=request.user)
-    # except Cart.DoesNotExist:
-    #      pass
-    #      return render(request, "pages/login.html")
+    try:
+        cart = Cart.objects.get(customer__user=request.user)
+        cart_items = CartItem.objects.filter(cart=cart).select_related("product")
+        context = {'cart_items': cart_items}
+        return render(request, 'pages/cart.html', context)
+    except Cart.DoesNotExist:
+        pass
+        return render(request, "pages/login.html")
 
     # items_in_cart = CartItem.objects.filter(cart=cart)
-    products = Product.objects.filter(price__gte=1170000)
-    context = {'products': products}
-    return render(request, 'pages/cart.html', context)
+    # products = Product.objects.filter(price__gte=1170000)
+    # context = {'products': products}
+    # return render(request, 'pages/cart.html', context)
 
 
 def contact(request):
@@ -158,5 +162,5 @@ def calculator(request):
         curtain_check = True
 
     form = VehicleCalculatorForm()
-    context={"calculator_form": form, 'curtain_check': curtain_check}
+    context = {"calculator_form": form, 'curtain_check': curtain_check}
     return render(request, 'pages/calculator.html', context=context)

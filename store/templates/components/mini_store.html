@@ -1,65 +1,69 @@
 {% load static %}
 {% load humanize %}
 <section class="shop_section layout_padding">
-  <div class="container">
-    <div class="heading_container heading_center">
-      <h2>At a glance..</h2>
-    </div>
-    <!-- This will be a statically choosen featured item for the catalogue-->
-    <div class="row">
-      <div class="col-md-6">
-        <div class="box">
-          <a href="">
-            <div class="img-box">
-                <img src="/static/Images/{{ featured_product.getImage }}" alt="">
-            </div>
-            <div class="detail-box">
-              <h6>{{ featured_product.name }}</h6>
-              {%if featured_product.discount_price > 0 %}   
-                        <h6>Price: <span><ins>R{{featured_product.getDiscountPrice | floatformat:2 | intcomma }}</ins> R<del>{{ featured_product.price | floatformat:2 | intcomma }}</del><span> </h6>
-                        <div class="new">
-                        </div>
-                        {% else %}
-                        <h6>Price: <span>R{{ featured_product.price | floatformat:2 | intcomma }}</span></h6>
-                        {% endif %}
-            </div>
-            <div class="new">
-              <span> Featured </span>
-            </div>
-          </a>
-           <a  href="{% url 'cart' %}">
-              <i class="fa fa-shopping-cart float-right"></i>
-           </a>
+    <div class="container">
+        <div class="heading_container heading_center">
+            <h2>At a glance..</h2>
         </div>
-      </div>
-      {% for product in products %}
-      <div class="col-sm-6 col-xl-3">
-        <div class="box">
-          <a href="">
-            <div class="img-box">
-                <img src="/static/Images/{{ product.getImage }}" alt="">
+        <!-- This will be a statically choosen featured item for the catalogue-->
+        <div class="row">
+            <div class="col-md-6">
+                <div class="box">
+                    <a href="">
+                        <div class="img-box">
+                            <img src="/static/Images/{{ featured_product.getImage }}" alt="">
+                        </div>
+                        <div class="detail-box">
+                            <h6>{{ featured_product.name }}</h6>
+                            {%if featured_product.discount_price > 0 %}
+                            <h6>Price: <span><ins>R{{featured_product.getDiscountPrice | floatformat:2 | intcomma }}</ins> R<del>{{ featured_product.price | floatformat:2 | intcomma }}</del><span>
+                            </h6>
+                            <div class="new">
+                            </div>
+                            {% else %}
+                            <h6>Price: <span>R{{ featured_product.price | floatformat:2 | intcomma }}</span></h6>
+                            {% endif %}
+                        </div>
+                        <div class="new">
+                            <span> Featured </span>
+                        </div>
+                    </a>
+                    <a href="{% url 'add_to_cart'  featured_product.pk %}">
+                        <i class="fa fa-shopping-cart float-right"></i>
+                    </a>
+                </div>
             </div>
-            <div class="detail-box">
-              <h6>{{product.name}}</h6>
-              <br>
-              {%if product.discount_price > 0 %}   
-              <h6>Price: <span><ins style="color:#61963f">R{{product.getDiscountPrice | floatformat:2 | intcomma }}</ins> R<del>{{product.price | floatformat:2 | intcomma }}</del><span> </h6>
-              <div class="new">
+            {% for product in products %}
+            <div class="col-sm-6 col-xl-3">
+                <div class="box">
+                    <a href="">
+                        <div class="img-box">
+                            <img src="/static/Images/{{ product.getImage }}" alt="">
+                        </div>
+                        <div class="detail-box">
+                            <h6>{{product.name}}</h6>
+                            <br>
+                            {%if product.discount_price > 0 %}
+                            <h6>Price: <span><ins style="color:#61963f">R{{product.getDiscountPrice | floatformat:2 | intcomma }}</ins> R<del>{{product.price | floatformat:2 | intcomma }}</del><span>
+                            </h6>
+                            <div class="new">
                   <span>
                   On Sale!
                   </span>
-              </div>
-              {% else %}
-              <h6>Price: <span>R{{product.price | floatformat:2 | intcomma }}</span></h6>
-              {% endif %}
+                            </div>
+                            {% else %}
+                            <h6>Price: <span>R{{product.price | floatformat:2 | intcomma }}</span></h6>
+                            {% endif %}
+                        </div>
+                    </a>
+                    <a href="{% url 'add_to_cart'  product.pk %}">
+                        <i class="fa fa-shopping-cart float-right"></i>
+                    </a>
+                </div>
             </div>
-          </a>
-            <i class="fa fa-shopping-cart float-right"></i>
+            {% endfor %}
+            <div class="btn-box">
+                <a href="{% url 'store' %}"> View All </a>
+            </div>
         </div>
-      </div>
-      {% endfor %}
-    <div class="btn-box">
-      <a href="{% url 'store' %}"> View All </a>
-    </div>
-  </div>
 </section>
