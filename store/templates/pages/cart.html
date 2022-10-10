@@ -49,7 +49,7 @@
                                         </button>
                                     </div>
                                     <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
-                                        <h5 class="mb-0">R {{ item.product.price }}</h5>
+                                        <h5 class="mb-0">R {{ item.product.price | floatformat:2 | intcomma }}</h5>
                                     </div>
                                     <div class="col-md-1 col-lg-1 col-xl-1 text-end">
                                         <a href="{% url 'remove_from_cart' item.product.pk %}" class="text-danger"><i
@@ -78,9 +78,14 @@
                         <div class="card mb-4">
                             <div class="card-body p-4 d-flex flex-row">
                                 <div class="form-outline flex-fill">
-
-                                    <label class="form-label" for="form1">Total Price:</label>
-                                    <p class="float-right">R {{ cart.total_price }}</p>
+                                    <label class="form-label" for="form1">Sub Total:</label>
+                                    <p class="float-right">R {{ cart.total_price | floatformat:2 | intcomma }}</p>
+                                    <br>
+                                    <label class="form-label" for="form1">VAT @ 15%:</label>
+                                    <p class="float-right">R {{ cart.get_vat | floatformat:2 | intcomma }}</p>
+                                    <br>
+                                    <label class="form-label"for="form1">Total:</label>
+                                    <p class="float-right">R {{ cart.get_final_price | floatformat:2 | intcomma }}</p>
                                 </div>
 
                             </div>

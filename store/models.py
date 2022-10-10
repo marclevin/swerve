@@ -113,6 +113,13 @@ class Cart(models.Model):
     total_price = models.FloatField(default=0)
     order_number = models.CharField(max_length=100, default="")
 
+    def get_vat(self):
+        return self.total_price * 0.15
+    
+    def get_final_price(self):
+        return self.total_price + self.get_vat()
+
+
 
 class CartItem(models.Model):
     cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
