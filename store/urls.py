@@ -31,5 +31,6 @@ urlpatterns = [
     path("receipt/<int:order_id>/", views.get_receipt, name="get_receipt"),
     # path to try edit profile
     path("edit_profile/", views.edit_profile, name="edit_profile"),
-    path("about/", views.about_unchained, name="about"),
+    path("about_unchained/", views.about_unchained, name="about_unchained"),
+    path("about/", views.about, name="about"),
 ]

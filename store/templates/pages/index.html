@@ -38,7 +38,7 @@
                                             We are an organisation of students with the ambition to make access to the sale of electronic vehicles easier in order to save the environment.
                                         </p>
                                         <div class="btn-box">
-                                            <a href="" class="btn1">
+                                            <a href="{% url 'about' %}" class="btn1">
                                                 Learn More
                                             </a>
                                         </div>
@@ -90,7 +90,7 @@
                                             Meet the masterminds behind Swerve and all the people that made this website possible.
                                         </p>
                                         <div class="btn-box">
-                                            <a href="{% url 'about' %}" class="btn1">
+                                            <a href="{% url 'about_unchained' %}" class="btn1">
                                                 About Us
                                             </a>
                                         </div>
@@ -122,15 +122,11 @@
     <!-- end shop section -->
 
     <!-- about section -->
-    {% include 'components/about.html' %}
+    {% include 'components/aboutformain.html' %}
     <!-- end about section -->
 
     <!-- feature section -->
-    {% include 'components/features.html' %}
-    <!-- end feature section -->
 
     <!-- contact section -->
-    {% include 'components/contact.html' %}
-    <!-- end contact section -->
 
 {% endblock content %}
