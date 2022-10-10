@@ -8,6 +8,7 @@ from django.urls import reverse
 from crispy_forms.layout import Field, Layout
 
 
+
 class newCustomer(UserCreationForm):
     email = forms.EmailField(required=True,
                              widget=forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'email'}))

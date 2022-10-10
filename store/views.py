@@ -78,6 +78,10 @@ def login_request(request):
         else:
             messages.error(request, 'Invalid username or password.')
     form = AuthenticationForm()
+    form.fields['username'].widget.attrs['class'] = "form-control"
+    form.fields['username'].widget.attrs['placeholder'] = "username"
+    form.fields['password'].widget.attrs['class'] = "form-control"
+    form.fields['password'].widget.attrs['placeholder'] = "password"
     return render(request=request, template_name="pages/login.html", context={"login_form": form})
 
 
