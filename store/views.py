@@ -3,7 +3,7 @@ from django.shortcuts import get_object_or_404
 from django.core.mail import send_mail
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import AuthenticationForm
-from .forms import newCustomer, VehicleCalculatorForm
+from .forms import newCustomer, VehicleCalculatorForm, EditProfileForm
 from .models import *
 from .calculator import calculate
 from django.contrib.auth import login, authenticate, logout
@@ -59,6 +59,30 @@ def register_request(request):
             error_out = form.errors
     form = newCustomer()
     return render(request, 'pages/register.html', {'register_form': form, 'valid': isValid, 'error': error_out})
+
+
+def edit_profile(request):
+    if request.method == 'POST':
+        form = EditProfileForm(request.POST, instance=request.user)
+        if form.is_valid:
+            form.save()
+            messages.success(
+                request, f"success: you have edited your profile")
+            return redirect('index')
+        else:
+            form = EditProfileForm(instance=request.user)
+            context = {
+                'form': form,
+            }
+    form = EditProfileForm(instance=request.user)
+
+    return render(request, 'pages/edit_profile.html', {'edit_form': form})
+
+
+# def edit(request):
+#     customer, created = Customer.objects.get_or_create(user=request.user)
+#     context = {'customer': customer}
+#     return render(request, 'pages/edit_profile.html', context)
 
 
 def login_request(request):
@@ -158,7 +182,7 @@ def create_order(request):
         cart.active = False
         cart.save()
         address = 'you need to add an address to your profile'
-        if(customer.address != None):
+        if (customer.address != None):
             address = customer.address
         order = Order.objects.create(customer=customer, total_price=cart.total_price, order_number=order_number,
                                      destination=address)
@@ -264,7 +288,7 @@ def calculator(request):
         if form.is_valid():
             curtain_check = False
             product_suggested = calculate(form.cleaned_data)
-            
+
     else:
         curtain_check = True
 

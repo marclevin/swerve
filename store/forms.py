@@ -8,7 +8,6 @@ from django.urls import reverse
 from crispy_forms.layout import Field, Layout
 
 
-
 class newCustomer(UserCreationForm):
     email = forms.EmailField(required=True,
                              widget=forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'email'}))
@@ -17,14 +16,15 @@ class newCustomer(UserCreationForm):
     password1 = forms.CharField(required=True,
                                 widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Password'}))
     password2 = forms.CharField(required=True,
-                                widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Confirm Password'}))
+                                widget=forms.PasswordInput(
+                                    attrs={'class': 'form-control', 'placeholder': 'Confirm Password'}))
 
     class Meta:
         model = User
         fields = ['username', 'address', 'email', 'password1', 'password2']
         widgets = {
             'username': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Username'}),
-            'address': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'address'}),
+            'address': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'ad dress'}),
             'email': forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Email'}),
             'password1': forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Password'}),
             'password2': forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Password Again'}),
@@ -36,6 +36,30 @@ class newCustomer(UserCreationForm):
         if commit:
             user.save()
         return user
+
+
+class EditProfileForm(forms.ModelForm):
+    username = forms.CharField(max_length=100,
+                               required=True,
+                               widget=forms.TextInput(attrs={'class': 'form-control'}))
+    email = forms.EmailField(required=True,
+                             widget=forms.TextInput(attrs={'class': 'form-control'}))
+
+    class Meta:
+        username = forms.CharField(max_length=100,
+                                   required=True,
+                                   widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'u name'}))
+        email = forms.EmailField(required=True,
+                                 widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'e mail'}))
+        address = forms.CharField(required=False,
+                                  widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Address'}))
+        model = User
+        fields = ['username', 'email']
+
+        widgets = {
+            'username': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Username'}),
+            'email': forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Email'}),
+        }
 
 
 vehicle_frequency_choices = (

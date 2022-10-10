@@ -1,0 +1,18 @@
+{% extends 'master/main.html' %} {% load crispy_forms_filters %} {% load static %}
+{% block content %}
+    {% load crispy_forms_tags %}
+    <div class="container py-5">
+        <form method="POST">
+
+            {% csrf_token %}
+            {% for field in edit_form %}
+                <div class="form-control  mb-2 mt-2 bg-dark text-light border-dark">
+                    {{ field.label }}
+                </div>
+                {{ field }}
+                <br>
+            {% endfor %}
+            <button class="btn btn-primary form-control" type="submit">Edit</button>
+        </form>
+    </div>
+{% endblock content %}

@@ -23,5 +23,7 @@ urlpatterns = [
     # path to get specific receipt
     path('receipt/<int:order_id>/', views.get_receipt, name='get_receipt'),
     # path for report temp
-    path('report/', views.TotalOrders.as_view())
+    path('report/', views.TotalOrders.as_view()),
+    # path to try edit profile
+    path('edit_profile/', views.edit_profile, name='edit_profile')
 ]
