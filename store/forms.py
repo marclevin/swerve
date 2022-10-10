@@ -51,9 +51,9 @@ class EditProfileForm(forms.ModelForm):
     class Meta:
         username = forms.CharField(max_length=100,
                                    required=True,
-                                   widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'u name'}))
+                                   widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'username'}))
         email = forms.EmailField(required=True,
-                                 widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'e mail'}))
+                                 widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'email'}))
         address = forms.CharField(required=False,
                                   widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Address'}))
         model = User
