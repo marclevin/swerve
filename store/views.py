@@ -64,6 +64,7 @@ def register_request(request):
 def edit_profile(request):
     if request.method == 'POST':
         form = EditProfileForm(request.POST, instance=request.user)
+        print(request.POST)
         if form.is_valid:
             form.save()
             messages.success(
@@ -77,12 +78,6 @@ def edit_profile(request):
     form = EditProfileForm(instance=request.user)
 
     return render(request, 'pages/edit_profile.html', {'edit_form': form})
-
-
-# def edit(request):
-#     customer, created = Customer.objects.get_or_create(user=request.user)
-#     context = {'customer': customer}
-#     return render(request, 'pages/edit_profile.html', context)
 
 
 def login_request(request):
