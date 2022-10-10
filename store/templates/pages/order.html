@@ -28,7 +28,7 @@
                                         <p>{{ item.product.name }}</p>
                                     </div>
                                     <div class="col-md-4 col-lg-3">
-                                        <p>R {{ item.product.price }}</p>
+                                        <p>R {{ item.product.getDiscountPrice | floatformat:2 | intcomma }}</p>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -40,19 +40,33 @@
                                     </div>
                                 </div>
                             </div>
+                                <hr>
                             {% endfor %}
 
-
+                            <div class="mx-n5 px-5 py-4" style="background-color: #f2f2f2;">
+                                <div class="row">
+                                    <div class="col-md-8 col-lg-9">
+                                        <p>VAT:</p>
+                                    </div>
+                                    <div class="col-md-4 col-lg-3">
+                                        <p style=" white-space: nowrap;" >R{{ cart.get_vat | floatformat:2 | intcomma  }}</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-8 col-lg-9">
+                                        <p>Subtotal:</p>
+                                    </div>
+                                    <div class="col-md-4 col-lg-3">
+                                        <p> R{{cart.get_final_price | floatformat:2 | intcomma }}</p>
+                                </div>
+                            
+                            </div>
+                            <hr>
                             <div class="row my-4">
                                 <div class="col-md-4 offset-md-8 col-lg-3 offset-lg-9">
-                                    <p class="lead fw-bold mb-0" style="color: #00490f;">R{{ cart.total_price}}</p>
+                                    <p class="lead fw-bold mb-0" style="color: #256003;  white-space: nowrap; ">R{{ cart.get_final_price | floatformat:2 | intcomma}}</p>
                                 </div>
                             </div>
-
-
-
-
-
                             <p class="mt-4 pt-2 mb-0">Want any help? <a href="#!" style="color: #003813;">Please contact
                                 us</a></p>
 
