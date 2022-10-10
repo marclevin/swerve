@@ -312,3 +312,6 @@ def calculator(request):
 
 def about_unchained(request):
     return render(request, "pages/aboutunchained.html")
+
+def about(request):
+    return render(request, "components/about.html")

@@ -1,18 +1,20 @@
+{% extends 'master/main.html' %}
 {% load static %}
-<section class="about_section layout_padding ">
+{% block content %}
+<section style="background-color: #3b3b3b;" class="about_section layout_padding ">
   <div class="container">
     <div class="row">
       <div class="col-md-6 col-lg-5">
         <div class="img-box">
-          <img src="{% static 'images/about-img.png' %}" alt="" />
+          <img src="{% static 'images/deco_images/SwerveSplash.png' %}" alt="" />
         </div>
       </div>
       <div class="col-md-6 col-lg-7">
         <div class="detail-box">
           <div class="heading_container">
-            <h2>About Us</h2>
+            <h2 style="color:white">About Us</h2>
           </div>
-          <p>
+          <p style="color:white">
             There are many variations of passages of Lorem Ipsum available, but
             the majority have suffered alteration in some form, by injected
             humour, or randomised words which don't look even slightly
@@ -20,7 +22,6 @@
             need to be sure there isn't anything embarrassing hidden in the
             middle of text. All
           </p>
-          <a href=""> Read More </a>
         </div>
       </div>
     </div>
@@ -28,3 +29,4 @@
 </section>
 
 <!-- end about section -->
+{% endblock content %}

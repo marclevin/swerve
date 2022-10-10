@@ -80,11 +80,11 @@
                                 <div class="form-outline flex-fill">
                                     <label class="form-label" for="form1">Sub Total:</label>
                                     <p class="float-right">R {{ cart.total_price | floatformat:2 | intcomma }}</p>
-                                    <br>
+                                    <hr>
                                     <label class="form-label" for="form1">VAT @ 15%:</label>
                                     <p class="float-right">R {{ cart.get_vat | floatformat:2 | intcomma }}</p>
-                                    <br>
-                                    <label class="form-label"for="form1">Total:</label>
+                                    <hr>
+                                    <label class="form-label" for="form1">Total:</label>
                                     <p class="float-right">R {{ cart.get_final_price | floatformat:2 | intcomma }}</p>
                                 </div>
 
