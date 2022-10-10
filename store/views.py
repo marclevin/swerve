@@ -157,8 +157,11 @@ def create_order(request):
         cart.order_number = order_number
         cart.active = False
         cart.save()
+        address = 'you need to add an address to your profile'
+        if(customer.address != None):
+            address = customer.adress
         order = Order.objects.create(customer=customer, total_price=cart.total_price, order_number=order_number,
-                                     destination=customer.address)
+                                     destination=address)
         # order.save()
         context = {'order': order, 'cart_items': cart_items, 'cart': cart}
     except Cart.DoesNotExist:
