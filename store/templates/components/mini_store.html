@@ -9,9 +9,9 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="box">
-                    <a href="">
+                    <a href="{% url 'single_product' featured_product.pk  %}">
                         <div class="img-box">
-                            <img src="/static/Images/{{ featured_product.getImage }}" alt="">
+                            <img style="border: 3px solid #b6b6b6;border-radius: 5px;" src="/static/Images/{{ featured_product.getImage }}" alt="">
                         </div>
                         <div class="detail-box">
                             <h6>{{ featured_product.name }}</h6>
@@ -38,7 +38,7 @@
                 <div class="box">
                     <a href="">
                         <div class="img-box">
-                            <img src="/static/Images/{{ product.getImage }}" alt="">
+                            <img style="border: 3px solid #b6b6b6;border-radius: 5px;" src="/static/Images/{{ product.getImage }}" alt="">
                         </div>
                         <div class="detail-box">
                             <h6>{{product.name}}</h6>

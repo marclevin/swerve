@@ -474,8 +474,7 @@ a:focus {
 }
 
 .about_section {
-  background-color: #363636;
-  color: #ebebeb;
+  color: productname;
 }
 
 .about_section .row {
