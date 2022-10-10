@@ -17,7 +17,7 @@ class Customer(models.Model):
 class Category(models.Model):
     name = models.CharField(max_length=100)
     description = models.CharField(max_length=350, blank=True)
-    image = models.ImageField(upload_to='category_images/', default='afk.jpg')
+    image = models.ImageField(upload_to="category_images/", default="afk.jpg")
 
     @staticmethod
     def get_categories():
@@ -37,13 +37,11 @@ class Product(models.Model):
     colour = models.CharField(max_length=100, default="")
     weight = models.FloatField(default=0)
     stock = models.IntegerField()
-    image = models.ImageField(upload_to='product_images/', default='afk.jpg')
+    image = models.ImageField(upload_to="product_images/", default="afk.jpg")
     # new fields
     max_speed = models.FloatField(default=0)
     max_range = models.FloatField(default=0)
     charge_time = models.FloatField(default=0)
-
-
 
     @staticmethod
     def get_products_by_id(ids):
@@ -64,7 +62,7 @@ class Product(models.Model):
         return self.name
 
     def getImage(self):
-        if self.image and hasattr(self.image, 'url'):
+        if self.image and hasattr(self.image, "url"):
             return self.image
 
     def getDiscountPrice(self):
@@ -75,17 +73,16 @@ class Product(models.Model):
 
 
 ORDER_STATUS = (
-    ('Pending', 'Pending'),
-    ('Cancelled', 'Cancelled'),
-    ('Delivered', 'Delivered'),
+    ("Pending", "Pending"),
+    ("Cancelled", "Cancelled"),
+    ("Delivered", "Delivered"),
 )
 
 
 class Order(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     date = models.DateField(default=datetime.datetime.today)
-    status = models.CharField(
-        max_length=100, choices=ORDER_STATUS, default='Pending')
+    status = models.CharField(max_length=100, choices=ORDER_STATUS, default="Pending")
     total_price = models.FloatField(default=0)
     order_number = models.CharField(max_length=100, default="")
     destination = models.CharField(max_length=100, default="")
@@ -107,7 +104,7 @@ class Order(models.Model):
 
     @staticmethod
     def get_order_by_customer(customer_id):
-        return Order.objects.filter(customer=customer_id).order_by('-date')
+        return Order.objects.filter(customer=customer_id).order_by("-date")
 
 
 class Cart(models.Model):
@@ -123,9 +120,8 @@ class CartItem(models.Model):
     quantity = models.IntegerField(default=0)
     price = models.FloatField(default=0)
 
-
     def __str__(self):
-        return f'{self.quantity} of {self.product.name}'
+        return f"{self.quantity} of {self.product.name}"
 
     def get_total_price(self):
         return self.quantity * self.price
