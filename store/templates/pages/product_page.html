@@ -26,7 +26,7 @@
                 {% for product in products %}
                     <div class="col-sm-6 col-xl-3">
                         <div class="box">
-                            <a href="">
+                            <a href="{% url 'single_product' product.pk  %}">
                                 <div class="img-box">
                                     <img src="/static/Images/{{ product.getImage }}" alt="">
                                 </div>

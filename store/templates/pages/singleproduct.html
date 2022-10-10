@@ -1,0 +1,45 @@
+{% extends "master/main.html" %}
+{% load static %}
+{% block content %}
+{% load humanize %}
+<section class="about_section layout_padding">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 col-lg-5">
+        <div class="img-box">
+          <img style="border: 10px solid #363636;border-radius: 10px;" src="/static/Images/{{ product.getImage }}" alt="" />
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-7">
+        <div class="detail-box">
+          <div class="heading_container">
+            <h2>{{ product.name }}</h2>
+          </div>
+          {%if product.discount_price > 0 %} 
+            <h5 style="color:#61963f">ON SALE!</h5>
+          {% endif %}
+          <p>
+            {{ product.description }}
+          </p>
+          <h5 style="color:#61963f">Specs</h5>
+          <h6>Top Speed: {{product.max_speed}} km/h</h6>
+          <h6>Range: {{product.max_range}} km</h6>
+          <h6>Charge Time: {{product.charge_time}} hours</h6>
+          <br>
+          {%if product.discount_price > 0 %}   
+            <h6 style="color:rgb(94, 94, 94)">List Price: R<del>{{ product.price | floatformat:2 | intcomma }}</del></h6>
+            <h5>Discount Price: </h5><h5 style="color:#61963f"> <ins>R{{product.getDiscountPrice | floatformat:2 | intcomma }}</ins></h5>
+          {% else %}
+          <h5>Price: </h5>
+            <h5 style="color:#61963f">R{{ product.price | floatformat:2 | intcomma }}</h5>
+          {% endif %}
+          <a href="{% url 'add_to_cart'  product.pk %}"> Add To Cart </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- end about section -->
+
+{% endblock content %}

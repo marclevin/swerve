@@ -2,6 +2,7 @@
 {% block content %}
     {% load crispy_forms_filters %}
     {% load crispy_forms_tags %}
+    {% load humanize %}
     <link href="{% static 'css/curtain.css' %}" rel="stylesheet"/>
     <div class="curtain">
         <div class="curtain__wrapper">
@@ -42,10 +43,45 @@
                         </div>
                         <div id="result_div" style="display: none">
                             <h2>Result:</h2>
-                            <h3>{{ product_suggested.name }}</h3>
-                            <div class="img-box">
-                                <img src="/static/Images/{{ product_suggested.getImage }}" alt="">
+                           <!-- Single Product Page mimic-->
+                           <section class="about_section layout_padding">
+                            <div class="container">
+                              <div class="row">
+                                <div class="col-md-6 col-lg-5">
+                                  <div class="img-box">
+                                    <img style="border: 10px solid #363636;border-radius: 10px;" src="/static/Images/{{ product_suggested.getImage }}" alt="" />
+                                  </div>
+                                </div>
+                                <div class="col-md-6 col-lg-7">
+                                  <div class="detail-box">
+                                    <div class="heading_container">
+                                      <h2>{{ product_suggested.name }}</h2>
+                                    </div>
+                                    {%if product_suggested.discount_price > 0 %} 
+                                      <h5 style="color:#61963f">ON SALE!</h5>
+                                    {% endif %}
+                                    <p>
+                                      {{ product_suggested.description }}
+                                    </p>
+                                    <h5 style="color:#61963f">Specs</h5>
+                                    <h6>Top Speed: {{product_suggested.max_speed}} km/h</h6>
+                                    <h6>Range: {{product_suggested.max_range}} km</h6>
+                                    <h6>Charge Time: {{product_suggested.charge_time}} hours</h6>
+                                    <br>
+                                    {%if product_suggested.discount_price > 0 %}   
+                                      <h6 style="color:rgb(94, 94, 94)">List Price: R<del>{{ product_suggested.price | floatformat:2 | intcomma }}</del></h6>
+                                      <h5>Discount Price: </h5><h5 style="color:#61963f"> <ins>R{{product_suggested.getDiscountPrice | floatformat:2 | intcomma }}</ins></h5>
+                                    {% else %}
+                                    <h5>Price: </h5>
+                                      <h5 style="color:#61963f">R{{ product_suggested.price | floatformat:2 | intcomma }}</h5>
+                                    {% endif %}
+                                    <a href="{% url 'add_to_cart'  product_suggested.pk %}"> Add To Cart </a>
+                                  </div>
+                                </div>
+                              </div>
                             </div>
+                          </section>
+                          <!-- End mimic-->
                         </div>
                     </div>
                 {% endif %}

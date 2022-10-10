@@ -8,9 +8,7 @@ from .models import *
 from .calculator import calculate
 from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
-from django.db.models import Sum, Count
-from slick_reporting.views import SlickReportView
-from slick_reporting.fields import SlickReportField
+
 
 
 # Create your views here.
@@ -246,6 +244,13 @@ def product_by_category(request, category):
     return render(request, "pages/product_page.html", context)
 
 
+def single_product(request, product_id):
+    product = Product.objects.get(pk=product_id)
+    context = {"product": product}
+    return render(request, "pages/singleproduct.html", context)
+
+
+
 def product_filter_search(request, category, filter_products):
     category_selected = Category.objects.get(name=category)
     # context = {'products': products, 'category': category_selected}
@@ -305,17 +310,5 @@ def calculator(request):
     return render(request, "pages/calculator.html", context=context)
 
 
-class TotalOrders(SlickReportView):
-    report_description = "Some description"
-    report_model = Order
-    date_field = "date"
-    columns = [
-        SlickReportField.create(Sum, "total_price", "Stonks"),
-    ]
-    chart_settings = [
-        {
-            "type": "column",
-            "data_source": ["Stonks"],
-            "plot_total": True,
-        },
-    ]
+def about(request):
+    return render(request, "pages/aboutunchained.html")

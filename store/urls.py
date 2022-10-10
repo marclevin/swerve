@@ -24,12 +24,12 @@ urlpatterns = [
     ),
     # url to create order
     path("order/", views.create_order, name="create_order"),
+    path("single/<int:product_id>", views.single_product, name="single_product"),
     # path to see all previous orders
     path("orders/", views.get_orders, name="get_orders"),
     # path to get specific receipt
     path("receipt/<int:order_id>/", views.get_receipt, name="get_receipt"),
-    # path for report temp
-    path("report/", views.TotalOrders.as_view()),
     # path to try edit profile
     path("edit_profile/", views.edit_profile, name="edit_profile"),
+    path("about/", views.about, name="about"),
 ]
