@@ -11,18 +11,15 @@
                 {{ field.label }}
                 </div>
                 {{ field }}
-                {% if not valid  %}
-                    {{ field.error }}
-                {% endif %}
                 <br>
             {% endfor %}
             <button class="btn btn-primary form-control" type="submit">Register</button>
         </form>
         <br>
         {% if not valid %}
-            <h2 class="row-form-errors" >Error:</h2>
+            <h2 class="row-form-errors text-danger" >Error:</h2>
             <br/>
-            <alert> {{ error }} </alert>
+            <alert class="alert-danger"> {{ error }} </alert>
         {% endif %}
         <p class="text-center">
             If you already have an account,<b
