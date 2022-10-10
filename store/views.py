@@ -159,7 +159,7 @@ def create_order(request):
         cart.save()
         address = 'you need to add an address to your profile'
         if(customer.address != None):
-            address = customer.adress
+            address = customer.address
         order = Order.objects.create(customer=customer, total_price=cart.total_price, order_number=order_number,
                                      destination=address)
         # order.save()
