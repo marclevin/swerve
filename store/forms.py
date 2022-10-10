@@ -9,8 +9,14 @@ from crispy_forms.layout import Field, Layout
 
 
 class newCustomer(UserCreationForm):
-    email = forms.EmailField(required=True)
-    address = forms.CharField(required=False)
+    email = forms.EmailField(required=True,
+                             widget=forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'email'}))
+    address = forms.CharField(required=False,
+                              widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Address'}))
+    password1 = forms.CharField(required=True,
+                                widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Password'}))
+    password2 = forms.CharField(required=True,
+                                widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Confirm Password'}))
 
     class Meta:
         model = User
