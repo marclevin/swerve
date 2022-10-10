@@ -310,5 +310,5 @@ def calculator(request):
     return render(request, "pages/calculator.html", context=context)
 
 
-def about(request):
+def about_unchained(request):
     return render(request, "pages/aboutunchained.html")
