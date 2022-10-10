@@ -17,14 +17,20 @@ def calculate(dictionary):
     products = products.filter(max_range__gte=vehicle_drive_dist)
     # Use the frequency to determine if they need a fast charger
     # If they drive more than once a day, they need a fast charger
-    if vehicle_frequency == "More than once a day":
-        products = products.filter(charge_time__lte=3)
-    if vehicle_frequency == "Once a day":
-        products = products.filter(charge_time__lte=5)
-    if vehicle_frequency == "Once a week":
+    if vehicle_type == "E-Car":
         products = products.filter(charge_time__lte=10)
-    if vehicle_frequency == "Once a month":
-        products = products.filter(charge_time__lte=20)
+    else:
+        if vehicle_frequency == "More than once a day":
+            products = products.filter(charge_time__lte=3)
+        if vehicle_frequency == "Once a day":
+            products = products.filter(charge_time__lte=5)
+        if vehicle_frequency == "Once a week":
+            products = products.filter(charge_time__lte=10)
+        if vehicle_frequency == "Once a month":
+            products = products.filter(charge_time__lte=20)
+    
     # Randomize the final selection
     # Use the number of people to determine if we should suggest a different product (maybe todo)
+    if products.order_by("?").first() is None:
+        return None
     return products.order_by("?").first()
