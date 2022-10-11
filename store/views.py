@@ -319,7 +319,9 @@ def about_unchained(request):
 def report(request):
     order = Order.get_all_orders()
     product = Product.get_all_products()
+    user = User.objects.all()
     context = {"order": order,
-               "product": product
+               "product": product,
+               "user": user
                }
     return render(request, "pages/reports.html", context)

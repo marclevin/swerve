@@ -21,15 +21,15 @@
 
         <table>
         <tr>
-    <th>Customer Name</th>
+    <th>Customer Name   </th>
     <th>Date</th>
     <th>Price</th>
   </tr>
     <tr>
     {% for order in order %}
-        <td>{{ order.customer }}</td>
-        <td>{{ order.date }}</td>
-        <td>{{ order.total_price }}</td>
+        <td>{{ order.customer }} </td>
+        <td>{{ order.date }} </td>
+        <td>{{ order.total_price }} </td>
     </tr>
     <tr>
     {% endfor %}
@@ -61,8 +61,8 @@
   </tr>
     <tr>
     {% for product in product %}
-        <td>{{ product.name }}</td>
-        <td>{{ product.stock }}</td>
+        <td>{{ product.name }}  </td>
+        <td>{{ product.stock }} </td>
 
     </tr>
     <tr>
@@ -73,6 +73,7 @@
 
 
     <div class="col-sm-6 col-xl-5">
+        <h3 style="text-align: center;">General Statistics</h3>
 
          <table>
 
@@ -81,13 +82,18 @@
     <th>Statistic Value</th>
   </tr>
     <tr>
-        <td>Number of Products </td>
+        <td>Total Products </td>
         <td>{{ product.count }}</td>
 
     </tr>
     <tr>
-         <td>Number of Orders </td>
+         <td>Total Orders </td>
         <td>{{ order.count }}</td>
+
+    </tr>
+             <tr>
+         <td>Total Customers Registered </td>
+        <td>{{ user.count}}</td>
 
     </tr>
 </table>
