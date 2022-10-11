@@ -1,5 +1,3 @@
-import datetime
-
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
 from django.core.mail import send_mail
@@ -348,3 +346,7 @@ def report(request, filter_search, report_choice):
     context = {"order": order, "product": product, "user": user}
 
     return render(request, "pages/reports.html", context)
+
+
+def about(request):
+    return render(request, "components/about.html")
