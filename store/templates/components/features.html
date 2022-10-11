@@ -11,12 +11,13 @@
       <div class="col-sm-6 col-lg-3">
         <div class="box">
           <div class="img-box">
-            <img src="{% static 'images/f1.png' %}" alt="" />
+            <img src="{% static 'images/f1.png' %}" alt="" width="100%" 
+            height="auto" />
           </div>
           <div class="detail-box">
             <h5>Unparalled Speed</h5>
             <p>Electric Cars are outpacing their dinosaur-powered cousins.</p>
-            <a href="">
+            <a href="{% url 'product_by_category' 'E-Car' %}">
               <span> Buy Now </span>
               <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
             </a>
@@ -26,12 +27,13 @@
       <div class="col-sm-6 col-lg-3">
         <div class="box">
           <div class="img-box">
-            <img src="{% static 'images/f2.png' %}" alt="" />
+            <img src="{% static 'images/f2.png' %}" alt="" width="100%" 
+            height="auto" />
           </div>
           <div class="detail-box">
             <h5>Robustness</h5>
             <p>The E-Bikes we sell are robust, and fit for any conditions.</p>
-            <a href="">
+            <a href="{% url 'product_by_category' 'E-Bikes' %}">
               <span> Buy Now </span>
               <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
             </a>
@@ -41,12 +43,13 @@
       <div class="col-sm-6 col-lg-3">
         <div class="box">
           <div class="img-box">
-            <img src="{% static 'images/f3.png' %}" alt="" />
+            <img src="{% static 'images/f3.png' %}" alt="" width="100%" 
+            height="auto" />
           </div>
           <div class="detail-box">
-            <h5>Messages</h5>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit,</p>
-            <a href="">
+            <h5>Accessibility</h5>
+            <p>With our E-Skateboards, you can get anywhere, anytime. <br> Fast </p>
+            <a href="{% url 'product_by_category' 'E-Skates' %}">
               <span> Buy Now </span>
               <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
             </a>
@@ -56,12 +59,13 @@
       <div class="col-sm-6 col-lg-3">
         <div class="box">
           <div class="img-box">
-            <img src="{% static 'images/f4.png' %}" alt="" />
+            <img src="{% static 'images/f1.png' %}" alt="" width="100%" 
+            height="auto" />
           </div>
           <div class="detail-box">
-            <h5>Bluetooth</h5>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit,</p>
-            <a href="">
+            <h5>Paramount Safety</h5>
+            <p>Electric Cars are safe.<br> Plus who likes paying for gas?</p>
+            <a href="{% url 'product_by_category' 'E-Car' %}">
               <span> Buy Now </span>
               <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
             </a>
@@ -70,7 +74,7 @@
       </div>
     </div>
     <div class="btn-box">
-      <a href=""> View More </a>
+      <a href="{% url 'store' %}"> View More </a>
     </div>
   </div>
 </section>
