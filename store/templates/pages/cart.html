@@ -11,6 +11,7 @@
 
                     <div class="d-flex justify-content-between align-items-center mb-4">
                         <h3 class="fw-normal mb-0 text-black">Shopping Cart</h3>
+                        <p class="small text-muted mb-1">Shipping is flat rate R500<br>Orders over R5000 will be shipped free!</p>
 
                     </div>
 
@@ -83,6 +84,9 @@
                                     <hr>
                                     <label class="form-label" for="form1">VAT @ 15%:</label>
                                     <p class="float-right">R {{ cart.get_vat | floatformat:2 | intcomma }}</p>
+                                    <hr>
+                                    <label class="form-label" for="form1">Shipping:</label>
+                                    <p class="float-right">R {{ cart.get_shipping | floatformat:2 | intcomma }}</p>
                                     <hr>
                                     <label class="form-label" for="form1">Total:</label>
                                     <p class="float-right">R {{ cart.get_final_price | floatformat:2 | intcomma }}</p>

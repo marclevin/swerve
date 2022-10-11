@@ -128,7 +128,13 @@ class Cart(models.Model):
         return self.total_price * 0.15
 
     def get_final_price(self):
-        return self.total_price + self.get_vat()
+        return self.total_price + self.get_vat() + self.get_shipping()
+    
+    def get_shipping(self):
+        if (self.total_price + self.get_vat() > 5000):
+            return 0
+        else:
+            return 500
 
 
 class CartItem(models.Model):
