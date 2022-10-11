@@ -14,29 +14,28 @@ class newCustomer(UserCreationForm):
         widget=forms.EmailInput(
             attrs={"class": "form-control", "placeholder": "Email"}
         ),
-        label='Email',
+        label="Email",
     )
     address = forms.CharField(
         required=False,
         widget=forms.TextInput(
             attrs={"class": "form-control", "placeholder": "Address"}
         ),
-        label='Address',
+        label="Address",
     )
     password1 = forms.CharField(
         required=True,
         widget=forms.PasswordInput(
             attrs={"class": "form-control", "placeholder": "Password"}
         ),
-        label='Password',
+        label="Password",
     )
     password2 = forms.CharField(
         required=True,
         widget=forms.PasswordInput(
             attrs={"class": "form-control", "placeholder": "Confirm Password"}
         ),
-        label='Confirm Password',
-  
+        label="Confirm Password",
     )
 
     class Meta:
@@ -59,7 +58,6 @@ class newCustomer(UserCreationForm):
                 attrs={"class": "form-control", "placeholder": "Password Again"}
             ),
         }
-        
 
     def save(self, commit=True):
         user = super(newCustomer, self).save(commit=False)

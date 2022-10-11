@@ -32,5 +32,5 @@ urlpatterns = [
     # path to try edit profile
     path("edit_profile/", views.edit_profile, name="edit_profile"),
     path("about/", views.about_unchained, name="about"),
-    path("reports/", views.report, name="report"),
+    path("reports/<str:filter_search>/<str:report_choice>/", views.report, name="report"),
 ]

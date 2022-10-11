@@ -19,7 +19,6 @@
     />
 
 
-
     <!--dropdown filter css -->
     <link href="{% static 'css/dropdownFilter.css' %}" rel="stylesheet"/>
     <!-- font awesome style -->
@@ -29,7 +28,7 @@
     <link href="{% static 'css/style.css' %}" rel="stylesheet"/>
     <!-- responsive style -->
     <link href="{% static 'css/responsive.css' %}" rel="stylesheet"/>
-     <!-- cart page style -->
+    <!-- cart page style -->
     <link href="{% static 'css/cart.css' %}" rel="stylesheet"/>
 
 
@@ -97,17 +96,22 @@
                                 class="sr-only">(current)</span> </a>
                     </li>
                     {% if user.is_authenticated %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'cart' %}">Cart</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'get_orders' %}">Orders</a>
-                    </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'cart' %}">Cart</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'get_orders' %}">Orders</a>
+                        </li>
+                        {% if user.is_superuser %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'report'  'nada'  'nada' %}"> Reports </a>
+                            </li>
+                        {% endif %}
                     {% else %}
-                    <li class="nav-item">
-                        <a class="nav-link" style="opacity: 0.3;" href="">Cart</a>
-                    </li>
-                    <li class="nav-item">
+                        <li class="nav-item">
+                            <a class="nav-link" style="opacity: 0.3;" href="">Cart</a>
+                        </li>
+                        <li class="nav-item">
                         <a class="nav-link" style="opacity: 0.3;" href="">Orders</a>
                     {% endif %}
                 </ul>
@@ -148,16 +152,16 @@
                                         >Logout</a
                                         >
                                     </li>
-                                    {% if user.is_superuser %}
-                                    <li>
-                                        <a
-                                                class="dropdown-item"
-                                                style="color: #61963f"
-                                                href="{% url 'report' %}"
-                                        >Reports</a
-                                        >
-                                    </li>
-                                    {% endif %}
+{#                                    {% if user.is_superuser %}#}
+{#                                        <li>#}
+{#                                            <a#}
+{#                                                    class="dropdown-item"#}
+{#                                                    style="color: #61963f"#}
+{#                                                     href="{% url 'report'  'nada'  'nada' %}#}
+{#                                            >Reports</a#}
+{#                                            >#}
+{#                                        </li>#}
+{#                                    {% endif %}#}
                                 </ul>
                             </li>
                         </ul>

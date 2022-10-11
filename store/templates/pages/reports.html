@@ -1,93 +1,131 @@
 {% extends "master/main.html" %} {% load static %} {% block content %}
-<section class="shop_section layout_padding">
-  <div class="container">
-    <h1 style="text-align: center">Reports</h1>
-    <hr />
-    <br />
-    <div class="row">
-      <div class="col-sm-6 col-xl-5">
-        <h3 style="text-align: center">All Site Sales</h3>
-        <div class="dropdown">
-          <button onclick="myFunction()" class="dropbtn bg-info">
-            Sort by {# <i class="fa fa-arrow-down"></i>#}
-          </button>
-          <div id="myDropdown" class="dropdown-content">
-            <a href=""> Expensive </a>
-            <a href=""> Cheapest </a>
-          </div>
+    <section class="shop_section layout_padding">
+        <div class="container">
+            <h1 style="text-align: center">Reports</h1>
+            <hr/>
+            <br/>
+            <div class="row">
+                <div class="col-sm-6 col-xl-5">
+                    <h3 style="text-align: center">All Site Sales</h3>
+                    <div class="dropdown">
+                        <button onclick="myFunction()" class="dropbtn bg-info AllSiteSales">Sort by
+                            {#                 <i class="fa fa-arrow-down" ></i>#}
+                        </button>
+                        <div id="myDropdown" class="dropdown-content">
+                                                <a href="{% url 'report' 'date_newest' 'sales'%}">Newest </a>
+                                                <a href="{% url 'report' 'date_oldest' 'sales'%}">Oldest </a>
+                                                <a href="{% url 'report' 'price_lowest' 'sales'%}">Lowest total price </a>
+                                                <a href="{% url 'report' 'price_highest' 'sales'%}">Highest total price </a>
+                        </div>
+                    </div>
+
+                    <table>
+                        <tr>
+                            <th>Customer Name</th>
+                            <th>Date</th>
+                            <th>Price</th>
+                        </tr>
+                        <tr>
+                            {% for order in order %}
+                                <td>{{ order.customer }}</td>
+                                <td>{{ order.date }}</td>
+                                <td>{{ order.total_price }}</td>
+                                </tr>
+                                <tr>
+                            {% endfor %}
+                            </tr>
+                    </table>
+                </div>
+
+                <div class="col-sm-6 col-xl-5">
+                    <h3 style="text-align: center">Product Stock</h3>
+
+                    <div class="dropdown">
+                        <button onclick="myFunctionStock()" class="dropbtn bg-info AllStock">Sort by
+                            {#                 <i class="fa fa-arrow-down" ></i>#}
+                        </button>
+                        <div id="myDropdownStock" class="dropdown-content">
+                                                <a href="{% url 'report' 'stock_lowest' 'stock'%}">lowest in stock </a>
+                                                <a href="{% url 'report' 'stock_highest' 'stock'%}">highest in stock </a>
+                        </div>
+                    </div>
+
+                    <table>
+                        <tr>
+                            <th>Product Name</th>
+                            <th>Stock</th>
+                        </tr>
+                        <tr>
+                            {% for product in product %}
+                                <td>{{ product.name }}</td>
+                                <td>{{ product.stock }}</td>
+                                </tr>
+                                <tr>
+                            {% endfor %}
+                            </tr>
+                    </table>
+                </div>
+
+                <div class="col-sm-6 col-xl-5">
+                    <h3 style="text-align: center; margin-left:-25%;">General Statistics</h3>
+                    <table>
+                        <tr>
+                            <th>Statistic Name</th>
+                            <th>Statistic Value</th>
+                        </tr>
+                        <tr>
+                            <td>Total Products</td>
+                            <td>{{ product.count }}</td>
+                        </tr>
+                        <tr>
+                            <td>Total Orders</td>
+                            <td>{{ order.count }}</td>
+                        </tr>
+                        <tr>
+                            <td>Total Customers Registered</td>
+                            <td>{{ user.count }}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
         </div>
+        <script>
+            function myFunction() {
+                document.getElementById("myDropdown").classList.toggle("show");
+            }
 
-        <table>
-          <tr>
-            <th>Customer Name</th>
-            <th>Date</th>
-            <th>Price</th>
-          </tr>
-          <tr>
-            {% for order in order %}
-            <td>{{ order.customer }}</td>
-            <td>{{ order.date }}</td>
-            <td>{{ order.total_price }}</td>
-          </tr>
-          <tr>
-            {% endfor %}
-          </tr>
-        </table>
-      </div>
+            window.onclick = function (event) {
+                if (!event.target.matches(".AllSiteSales")) {
+                    var dropdowns = document.getElementsByClassName("dropdown-content");
+                    var i;
+                    for (i = 0; i < dropdowns.length; i++) {
+                        var openDropdown = dropdowns[i];
+                        if (openDropdown.classList.contains("show")) {
+                            openDropdown.classList.remove("show");
+                        }
+                    }
+                }
+            };
 
-      <div class="col-sm-6 col-xl-5">
-        <h3 style="text-align: center">Product Stock</h3>
+            function myFunctionStock() {
+                document.getElementById("myDropdownStock").classList.toggle("show");
+            }
 
-        <div class="dropdown">
-          <button onclick="myFunction()" class="dropbtn bg-info">
-            Sort by {# <i class="fa fa-arrow-down"></i>#}
-          </button>
-          <div id="myDropdown" class="dropdown-content">
-            <a href=""> Max Stock </a>
-            <a href=""> Min Stock </a>
-          </div>
-        </div>
+            window.onclick = function (event) {
+                if (!event.target.matches(".AllStock")) {
+                    var dropdowns = document.getElementsByClassName("dropdown-content");
+                    var i;
+                    for (i = 0; i < dropdowns.length; i++) {
+                        var openDropdown = dropdowns[i];
+                        if (openDropdown.classList.contains("show")) {
+                            openDropdown.classList.remove("show");
+                        }
+                    }
+                }
+            };
 
-        <table>
-          <tr>
-            <th>Product Name</th>
-            <th>Stock</th>
-          </tr>
-          <tr>
-            {% for product in product %}
-            <td>{{ product.name }}</td>
-            <td>{{ product.stock }}</td>
-          </tr>
-          <tr>
-            {% endfor %}
-          </tr>
-        </table>
-      </div>
+        </script>
+    </section>
 
-      <div class="col-sm-6 col-xl-5">
-        <h3 style="text-align: center; margin-left:-25%;">General Statistics</h3>
-        <table>
-          <tr>
-            <th>Statistic Name</th>
-            <th>Statistic Value</th>
-          </tr>
-          <tr>
-            <td>Total Products</td>
-            <td>{{ product.count }}</td>
-          </tr>
-          <tr>
-            <td>Total Orders</td>
-            <td>{{ order.count }}</td>
-          </tr>
-          <tr>
-            <td>Total Customers Registered</td>
-            <td>{{ user.count}}</td>
-          </tr>
-        </table>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- end about section -->
+    <!-- end about section -->
 {% endblock content %}
