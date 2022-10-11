@@ -90,7 +90,9 @@ class EditProfileForm(forms.ModelForm):
             widget=forms.TextInput(
                 attrs={"class": "form-control", "placeholder": "email"}
             ),
+
         )
+
 
         model = User
         fields = ["username", "email", "password"]
@@ -102,8 +104,25 @@ class EditProfileForm(forms.ModelForm):
             "email": forms.EmailInput(
                 attrs={"class": "form-control", "placeholder": "Email"}
             ),
-            "password": forms.EmailInput(
+            "password": forms.PasswordInput(
                 attrs={"class": "form-control", "placeholder": "Password"}
+            ),
+        }
+
+
+class EditCustomerAddress(forms.ModelForm):
+    class Meta:
+        address = forms.CharField(
+            max_length=100,
+            required=True,
+            widget=forms.TextInput(attrs={"class": "form-control"}),
+        )
+        model = Customer
+        fields = ["address"]
+
+        widgets = {
+            "address": forms.TextInput(
+                attrs={"class": "form-control", "placeholder": "Address"}
             ),
         }
 

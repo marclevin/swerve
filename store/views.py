@@ -3,7 +3,7 @@ from django.shortcuts import get_object_or_404
 from django.core.mail import send_mail
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import AuthenticationForm
-from .forms import newCustomer, VehicleCalculatorForm, EditProfileForm
+from .forms import newCustomer, VehicleCalculatorForm, EditProfileForm, EditCustomerAddress
 from .models import *
 from .calculator import calculate
 from django.contrib.auth import login, authenticate, logout
@@ -65,6 +65,7 @@ def register_request(request):
 def edit_profile(request):
     if request.method == "POST":
         form = EditProfileForm(request.POST, instance=request.user)
+        form_address = EditCustomerAddress(request.POST, instance=Customer)
         print(request.POST)
         if form.is_valid:
             form.save()
@@ -76,8 +77,9 @@ def edit_profile(request):
                 "form": form,
             }
     form = EditProfileForm(instance=request.user)
+    form_address = EditCustomerAddress(instance=request.user.customer)
 
-    return render(request, "pages/edit_profile.html", {"edit_form": form})
+    return render(request, "pages/edit_profile.html", {"edit_form": form, "form_address": form_address})
 
 
 def login_request(request):
