@@ -10,7 +10,6 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
 
 
-
 # Create your views here.
 
 
@@ -112,7 +111,7 @@ def add_to_cart(request, product_id):
     if (not request.user.is_authenticated) or (request.user.is_anonymous):
         messages.info(request, "You must be logged in to add items to your cart")
         return redirect("/register")
-    
+
     product = get_object_or_404(Product, pk=product_id)
     customer, created = Customer.objects.get_or_create(user=request.user)
     cart, created = Cart.objects.get_or_create(customer=customer, active=True)
@@ -254,7 +253,6 @@ def single_product(request, product_id):
     return render(request, "pages/singleproduct.html", context)
 
 
-
 def product_filter_search(request, category, filter_products):
     category_selected = Category.objects.get(name=category)
     # context = {'products': products, 'category': category_selected}
@@ -316,3 +314,12 @@ def calculator(request):
 
 def about_unchained(request):
     return render(request, "pages/aboutunchained.html")
+
+
+def report(request):
+    order = Order.get_all_orders()
+    product = Product.get_all_products()
+    context = {"order": order,
+               "product": product
+               }
+    return render(request, "pages/reports.html", context)

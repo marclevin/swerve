@@ -13,6 +13,10 @@ class Customer(models.Model):
     def __str__(self):
         return self.user.username
 
+    @staticmethod
+    def getAllUser():
+        return User.objects.all()
+
 
 class Category(models.Model):
     name = models.CharField(max_length=100)
@@ -71,6 +75,9 @@ class Product(models.Model):
         else:
             return self.price
 
+        def getNumberProducts(self):
+            return Product.objects.count(Product.name)
+
 
 ORDER_STATUS = (
     ("Pending", "Pending"),
@@ -106,6 +113,10 @@ class Order(models.Model):
     def get_order_by_customer(customer_id):
         return Order.objects.filter(customer=customer_id).order_by("-date")
 
+    @staticmethod
+    def get_all_orders():
+        return Order.objects.all()
+
 
 class Cart(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
@@ -115,10 +126,9 @@ class Cart(models.Model):
 
     def get_vat(self):
         return self.total_price * 0.15
-    
+
     def get_final_price(self):
         return self.total_price + self.get_vat()
-
 
 
 class CartItem(models.Model):
