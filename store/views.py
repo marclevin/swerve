@@ -304,7 +304,7 @@ def about_unchained(request):
 def report(request, filter_search, report_choice):
     order = Order.get_all_orders()
     product = Product.get_all_products()
-    user = User.objects.all()
+    users = User.objects.all()
 
     if report_choice == "sales":
         if filter_search == "date_newest":
@@ -328,7 +328,7 @@ def report(request, filter_search, report_choice):
         if filter_search == "statistic_highest":
             pass
 
-    context = {"order": order, "product": product, "user": user}
+    context = {"order": order, "product": product, "users": users}
 
     return render(request, "pages/reports.html", context)
 
