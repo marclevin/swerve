@@ -13,7 +13,9 @@
                 <br>
             {% endfor %}
             {% for field in form_address %}
-                {{ field.label }}
+                <div class="form-control  mb-2 mt-2 bg-dark text-light border-dark">
+                    {{ field.label }}
+                </div>
                 {{ field }}
                 <br>
             {% endfor %}
