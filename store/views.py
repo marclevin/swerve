@@ -315,7 +315,6 @@ def calculator(request):
 def about_unchained(request):
     return render(request, "pages/aboutunchained.html")
 
-
 def report(request):
     order = Order.get_all_orders()
     product = Product.get_all_products()
@@ -325,3 +324,6 @@ def report(request):
                "user": user
                }
     return render(request, "pages/reports.html", context)
+
+def about(request):
+    return render(request, "components/about.html")
