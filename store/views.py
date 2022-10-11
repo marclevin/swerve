@@ -224,21 +224,6 @@ def get_receipt(request, order_id):
     return render(request, "pages/receipt.html", context)
 
 
-def contact(request):
-    if request.method == "POST":
-        message_name = request.POST["message-name"]
-        message_email = request.POST["message-email"]
-        message_phone = request.POST["message-phone"]
-        message = request.POST["message"]
-        # send email
-        send_mail(
-            subject="Website Contact Form",
-            message=f"From: {message_name}   {message} Phone Number: {message_phone}",
-            from_email=message_email,
-            recipient_list=["@gmail.com"],
-        )
-    return render(request, "pages/index.html")
-
 
 def product_by_category(request, category):
     category_selected = Category.objects.get(name=category)
