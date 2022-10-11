@@ -93,7 +93,7 @@ class EditProfileForm(forms.ModelForm):
         )
 
         model = User
-        fields = ["username", "email"]
+        fields = ["username", "email", "password"]
 
         widgets = {
             "username": forms.TextInput(
@@ -101,6 +101,9 @@ class EditProfileForm(forms.ModelForm):
             ),
             "email": forms.EmailInput(
                 attrs={"class": "form-control", "placeholder": "Email"}
+            ),
+            "password": forms.EmailInput(
+                attrs={"class": "form-control", "placeholder": "Password"}
             ),
         }
 
