@@ -315,15 +315,38 @@ def calculator(request):
 def about_unchained(request):
     return render(request, "pages/aboutunchained.html")
 
-def report(request):
+
+def report(request, filter_search, report_choice):
     order = Order.get_all_orders()
     product = Product.get_all_products()
     user = User.objects.all()
-    context = {"order": order,
-               "product": product,
-               "user": user
-               }
+
+    if report_choice == "sales":
+        if filter_search == "date_newest":
+            order = Order.get_all_orders().order_by("-date")
+        if filter_search == "date_oldest":
+            order = Order.get_all_orders().order_by("date")
+        if filter_search == "price_lowest":
+            order = Order.get_all_orders().order_by("total_price")
+        if filter_search == "price_highest":
+            order = Order.get_all_orders().order_by("-total_price")
+
+    if report_choice == "stock":
+        if filter_search == "stock_lowest":
+            product = Product.get_all_products().order_by("stock")
+        if filter_search == "stock_highest":
+            product = Product.get_all_products().order_by("-stock")
+
+    if report_choice == "statistics":
+        if filter_search == "statistic_lowest":
+            pass
+        if filter_search == "statistic_highest":
+            pass
+
+    context = {"order": order, "product": product, "user": user}
+
     return render(request, "pages/reports.html", context)
+
 
 def about(request):
     return render(request, "components/about.html")

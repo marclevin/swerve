@@ -28,7 +28,7 @@ def calculate(dictionary):
             products = products.filter(charge_time__lte=10)
         if vehicle_frequency == "Once a month":
             products = products.filter(charge_time__lte=20)
-    
+
     # Randomize the final selection
     # Use the number of people to determine if we should suggest a different product (maybe todo)
     if products.order_by("?").first() is None:
