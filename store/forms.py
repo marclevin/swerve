@@ -92,8 +92,6 @@ class EditProfileForm(forms.ModelForm):
             ),
 
         )
-
-
         model = User
         fields = ["username", "email", "password"]
 
