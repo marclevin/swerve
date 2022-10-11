@@ -12,6 +12,13 @@
                 {{ field }}
                 <br>
             {% endfor %}
+            {% for field in form_address %}
+                <div class="form-control  mb-2 mt-2 bg-dark text-light border-dark">
+                    {{ field.label }}
+                </div>
+                {{ field }}
+                <br>
+            {% endfor %}
             <button class="btn btn-primary form-control" type="submit">Edit</button>
         </form>
     </div>
